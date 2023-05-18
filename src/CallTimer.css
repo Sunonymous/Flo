@@ -1,0 +1,28 @@
+.noselect { user-select: none; }
+
+.timerToggle {
+    position: fixed;
+    bottom:   16px;
+    right:    16px;
+    color: white;
+    font-size: 24px;
+    background: none;
+    border: none;
+}
+
+.timerToggle:hover {
+    color: #E20074;
+}
+
+.timerToggle:focus {
+    outline: none;
+}
+
+.timeDigits {
+    position: fixed;
+    bottom:   16px;
+    right:    48px;
+    font-weight: 800;
+    color: white;
+    font-size: 24px;
+}
