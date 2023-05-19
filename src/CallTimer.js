@@ -16,7 +16,7 @@ function formatTime(seconds) {
 
 const Timer = ({ resetter }) => {
   const   [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState(true);
 
   const resetTimer = () => {
     setSeconds(0);
