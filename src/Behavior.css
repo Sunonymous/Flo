@@ -13,6 +13,7 @@
     background: white;
     color: black; 
     border-radius: 16px;
+    user-select: none; 
 }
 
 .actionWrapper:hover {
@@ -34,5 +35,22 @@
     user-select: none; 
 }
 
-.actionLabel:hover {
+.undoButton {
+    width: 42px; 
+    height: 42px;
+    margin: 4px; 
+    padding: 2px 4px;
+    background: white;
+    color: black;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 500;
+    user-select: none; 
+}
+
+.undoButton:hover {
+    background: #E20074;
+    color: white;
+    border: 2px solid white;
+    font-weight: 600;
 }

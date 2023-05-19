@@ -6,3 +6,4 @@ Right now, the features are minimal, though they will be expanded upon as my fre
 # Keyboard Shortcuts
 These are the shortcuts which have been implemented:
 - ` - New Call / Reset
+- u - Undo Last Completed Action
