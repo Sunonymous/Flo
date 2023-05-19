@@ -24,6 +24,8 @@ const Timer = ({ resetter }) => {
   }
   resetter.on('newCall', resetTimer);
 
+  const timerToggle = () => setIsActive(!isActive)
+
   useEffect(() => {
     if (isActive) {
       const interval = setInterval(() => {
@@ -33,9 +35,19 @@ const Timer = ({ resetter }) => {
     }
   }, [isActive, seconds]);
 
+  // timer toggle keybinding
+  React.useEffect(() => {
+    const toggle = (e) => {
+      if (e.key.toLowerCase() === "t") timerToggle();
+    };
+    document.addEventListener("keyup", toggle);
+
+    return () => document.removeEventListener("keyup", toggle);
+  });
+
   return (
     <div>
-      <button className='timerToggle noselect' onClick={() => setIsActive(!isActive)}>
+      <button className='timerToggle noselect' onClick={timerToggle}>
         {isActive ? ' \u23F8' : '\u23F5'}
       </button>
       <p className='timeDigits noselect' >
