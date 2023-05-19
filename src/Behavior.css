@@ -2,25 +2,28 @@
     margin: 8px;
     padding: 1rem;
     border: 2px solid white;
-   border-radius: 8px; 
+    border-radius: 8px; 
 }
 
 .actionWrapper {
     margin: 8px;
-    padding: 2px;
+    padding: 0.35rem;
     display: flex;
     justify-content: center;
-    border: 2px solid gray;
+    background: white;
+    color: black; 
     border-radius: 16px;
 }
 
 .actionWrapper:hover {
-    border: 2px solid #E20074;
+    background: #E20074;
+    color: white; 
     text-decoration: underline;
 }
 
 .infoMessage {
     margin: 36px;
+    user-select: none; 
 }
 
 .actionBox {
@@ -28,6 +31,7 @@
 }
 
 .actionLabel {
+    user-select: none; 
 }
 
 .actionLabel:hover {

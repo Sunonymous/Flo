@@ -4,11 +4,11 @@ import React from 'react';
 const templateBehaviors = [
     'Personalized Greeting',
     'Recognize Effort',
-    'Own and Verify',
     'Probe to Understand',
     'Acknowledge',
+    'Own and Verify',
     'Early What Else?',
-    'Resolve',
+    'Resolve Issues',
     'NBA',
     'Verbal/Visual Audit',
     'Recap',
@@ -23,26 +23,13 @@ export default function Behavior({ resetter }) {
     resetter.on('newCall', reset);
 
     const callAction = (behavior, id) => {
-        const elementID = "action-" + id;
-        
-        // triggered on input change, passed event obj
-        const finishAction = (e) => {
-            if (e.target.checked) {
-            setCompletedIDs(completedIDs.concat(id));
-            }
-        };
+        const finishAction = (e) => setCompletedIDs(completedIDs.concat(id));
         
         return (
-        <div className="actionWrapper" key={id}>
-            <input
-            className='actionBox'
-            id={elementID}
-            type='checkbox'
-            onChange={finishAction}
-            />
-            <label className='actionLabel' htmlFor={elementID}>{behavior}</label>
+          <div className="actionWrapper" key={id} onClick={finishAction}>
+            <label className="actionLabel">{behavior}</label>
             <br />
-        </div>
+          </div>
         );
     };
 
@@ -65,10 +52,10 @@ export default function Behavior({ resetter }) {
     }
     // if behaviors remain, display them
     return (
-        <form className='wrapper'>
+        <div className='wrapper'>
             {templateBehaviors.map((b, id) => 
                  !completedIDs.includes(id) ? callAction(b, id) : null
             )}
-        </form>
-    )
+        </div>
+    );
 }
