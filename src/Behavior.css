@@ -5,6 +5,10 @@
     border-radius: 8px; 
 }
 
+.noselect {
+    user-select: none;
+}
+
 .actionWrapper {
     margin: 8px;
     padding: 0.35rem;
@@ -13,7 +17,6 @@
     background: white;
     color: black; 
     border-radius: 16px;
-    user-select: none; 
 }
 
 .actionWrapper:hover {
@@ -24,15 +27,10 @@
 
 .infoMessage {
     margin: 36px;
-    user-select: none; 
 }
 
 .actionBox {
     margin: 4px;
-}
-
-.actionLabel {
-    user-select: none; 
 }
 
 .undoButton {
@@ -45,7 +43,6 @@
     border-radius: 50%;
     font-size: 1.5rem;
     font-weight: 500;
-    user-select: none; 
 }
 
 .undoButton:hover {

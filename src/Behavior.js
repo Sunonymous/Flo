@@ -42,8 +42,8 @@ export default function Behavior({ resetter }) {
     const finishAction = (e) => setCompletedIDs(completedIDs.concat(id));
 
     return (
-      <div className="actionWrapper" key={id} onClick={finishAction}>
-        <label className="actionLabel">{behavior}</label>
+      <div className="actionWrapper noselect" key={id} onClick={finishAction}>
+        <label className="noselect">{behavior}</label>
         <br />
       </div>
     );
@@ -52,14 +52,14 @@ export default function Behavior({ resetter }) {
   // if there are no behaviors, let user know
   if (templateBehaviors.length === 0) {
     return (
-      <p className="infoMessage">No behaviors are present... what do we do?</p>
+      <p className="infoMessage noselect">No behaviors are present... what do we do?</p>
     );
   }
 
   // if all behaviors are completed, display such
   if (completedIDs.length === templateBehaviors.length) {
     return (
-      <p className="infoMessage">
+      <p className="infoMessage noselect">
         Behaviors complete! You have mastered the call.
       </p>
     );
@@ -69,7 +69,7 @@ export default function Behavior({ resetter }) {
   return (
     <>
       {completedIDs.length > 0 && (
-        <div className="undoButton" onClick={undoLastAction}>
+        <div className="undoButton noselect" onClick={undoLastAction}>
           {"\u2B6F"}
         </div>
       )}
