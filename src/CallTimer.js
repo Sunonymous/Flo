@@ -47,12 +47,14 @@ const Timer = ({ resetter }) => {
 
   return (
     <div>
-      <button className='timerToggle noselect' onClick={timerToggle}>
-        {isActive ? ' \u23F8' : '\u23F5'}
+      <button
+        className="timerToggle noselect"
+        onClick={timerToggle}
+        onFocus={(e) => e.target.blur()}
+      >
+        {isActive ? " \u23F8" : "\u23F5"}
       </button>
-      <p className='timeDigits noselect' >
-        {formatTime(seconds)}
-      </p>
+      <p className="timeDigits noselect">{formatTime(seconds)}</p>
     </div>
   );
 };
