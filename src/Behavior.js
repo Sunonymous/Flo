@@ -2,17 +2,12 @@ import "./Behavior.css";
 import React from "react";
 
 const templateBehaviors = [
-  "Personalized Greeting",
-  "Recognize Effort",
-  "Probe to Understand",
   "Acknowledge",
-  "Own and Verify",
+  "Probe to Understand",
   "Early What Else?",
-  "Resolve Issues",
-  "NBA",
   "Verbal/Visual Audit",
+  "NBA",
   "Recap",
-  "Personalized Close",
 ];
 
 export default function Behavior({ resetter }) {
