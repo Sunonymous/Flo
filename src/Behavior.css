@@ -22,7 +22,6 @@
 .actionWrapper:hover {
     background: #E20074;
     color: white; 
-    text-decoration: underline;
 }
 
 .infoMessage {
