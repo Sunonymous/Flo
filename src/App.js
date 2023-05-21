@@ -1,7 +1,9 @@
 import './App.css';
+import Logo from './Logo';
 import Timer from './CallTimer';
-import { useEffect, useState } from 'react';
+import LeftPanel from './LeftPanel';
 import Behavior from './Behavior';
+import { useEffect, useState } from 'react';
 
 class CallResetter {
   constructor() {
@@ -49,10 +51,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <button className='resetButton' onClick={() => resetter.emit('newCall')}>New Call</button>
+        <Logo text="flo" />
+        <button
+          className="resetButton"
+          onClick={() => resetter.emit("newCall")}
+        >
+          New Call
+        </button>
         <Behavior resetter={resetter} />
-        <Timer    resetter={resetter} />
+        <Timer resetter={resetter} />
       </header>
+      <LeftPanel tabLabel="\u2699">
+        <h2>Settings</h2>
+      </LeftPanel>
     </div>
   );
 }
