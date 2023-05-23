@@ -14,7 +14,7 @@ function formatTime(seconds) {
          : `${seconds}`;
 }
 
-const Timer = ({ resetter }) => {
+const Timer = ({ resetter, alertInterval }) => {
   const   [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
 
@@ -44,6 +44,9 @@ const Timer = ({ resetter }) => {
 
     return () => document.removeEventListener("keyup", toggle);
   });
+ 
+  // if timer reaches alert interval, add a special animation
+  const timerTextClass = 'timeDigits noselect ' + (seconds % alertInterval === 0  ? 'intervalAlert' : '');
 
   return (
     <div>
@@ -54,9 +57,9 @@ const Timer = ({ resetter }) => {
       >
         {isActive ? " \u23F8" : "\u23F5"}
       </button>
-      <p className="timeDigits noselect">{formatTime(seconds)}</p>
+      <p  className={timerTextClass}>{formatTime(seconds)}</p>
     </div>
   );
 };
-
+      // className="timeDigits noselect"
 export default Timer;
