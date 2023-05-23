@@ -9,7 +9,9 @@ const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
 
   React.useEffect(() => {
     const toggleOnKey = (e) => {
-      if (e.key === shortcutKey) setIsOpen(!isOpen);
+      if (e.key === shortcutKey && document.activeElement.nodeName !== 'TEXTAREA') {
+        setIsOpen(!isOpen);
+      }
     }
 
     document.addEventListener('keyup', toggleOnKey);
