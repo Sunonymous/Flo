@@ -40,7 +40,7 @@ function App() {
           alertInterval={config.alertInterval}
         />
       </header>
-      <LeftPanel tabLabel="\u2699">
+      <LeftPanel tabLabel={"\u2699"} shortcutKey='s'>
         <SettingsMenu config={config} setConfig={setConfig} />
       </LeftPanel>
     </div>
