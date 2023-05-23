@@ -14,13 +14,13 @@ function formatTime(seconds) {
          : `${seconds}`;
 }
 
-const Timer = ({ resetter, alertInterval }) => {
+const Timer = ({ resetter, autostartTimer, alertInterval }) => {
   const   [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(true);
 
   const resetTimer = () => {
     setSeconds(0);
-    setIsActive(true);
+    setIsActive(autostartTimer);
   }
   resetter.on('newCall', resetTimer);
 
