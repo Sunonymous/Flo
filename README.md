@@ -8,3 +8,4 @@ These are the shortcuts which have been implemented:
 - ` - New Call / Reset
 - t - Start/Stop Timer
 - u - Undo Last Completed Action
+- s - Open/Close Settings Panel
