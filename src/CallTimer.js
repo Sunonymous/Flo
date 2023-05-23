@@ -46,7 +46,11 @@ const Timer = ({ resetter, autostartTimer, alertInterval }) => {
   });
  
   // if timer reaches alert interval, add a special animation
-  const timerTextClass = 'timeDigits noselect ' + (seconds % alertInterval === 0  ? 'intervalAlert' : '');
+  const timerTextClass =
+    "timeDigits noselect " +
+    (seconds % (alertInterval * SECONDS_IN_MINUTE) === 0
+      ? "intervalAlert"
+      : "");
 
   return (
     <div>

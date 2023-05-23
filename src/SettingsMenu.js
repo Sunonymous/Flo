@@ -1,20 +1,13 @@
 import React from 'react';
 import './SettingsMenu.css';
-import defaultConfig from './defaultConfig';
 
 const SettingsMenu = ({ config, setConfig }) => {
-    // alertInterval is set using seconds and configured using minutes
-    // this seems uncouth 
-    const startingMinutes = config.alertInterval / 60;
-
-    const [alertInterval, setAlertInterval] = React.useState(startingMinutes);
-    const [autostartTimer, setAutostartTimer] = React.useState(defaultConfig.autostartTimer);
+    const [alertInterval, setAlertInterval] = React.useState(config.alertInterval);
+    const [autostartTimer, setAutostartTimer] = React.useState(config.autostartTimer);
 
     const updateTimerInterval = (e) => {
-        // uses minutes instead of seconds
-        const MIN_IN_SECONDS = 60;
-        const secondsForInterval = e.target.value * MIN_IN_SECONDS;
-        setConfig({...config, alertInterval: secondsForInterval });
+        // uses minutes instead of seconds, and I noticed this uses implicit casting... 
+        setConfig({...config, alertInterval: e.target.value });
         setAlertInterval(e.target.value);
     }
     
@@ -31,7 +24,7 @@ const SettingsMenu = ({ config, setConfig }) => {
         <label>Start timer on new call? </label>
         <input
           type="checkbox"
-          value={autostartTimer}
+          checked={autostartTimer}
           onChange={updateAutostartTimer}
         />
         <br />
