@@ -3,9 +3,9 @@ import React from "react";
 
 const templateBehaviors = [
   "Acknowledge",
-  "Probe to Understand",
-  "Early What Else?",
-  "Verbal/Visual Audit",
+  "Probing Questions",
+  "What Else?",
+  "Account Audit",
   "NBA",
   "Recap",
 ];
