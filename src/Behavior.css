@@ -50,3 +50,8 @@
     border: 2px solid white;
     font-weight: 600;
 }
+
+.behaviorEditor {
+    width: max-content;
+    height: max-content;
+}

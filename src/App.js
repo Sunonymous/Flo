@@ -33,7 +33,7 @@ function App() {
         >
           New Call
         </button>
-        <Behavior resetter={resetter} />
+        <Behavior resetter={resetter} editActive={config.editBehavior} />
         <Timer
           resetter={resetter}
           autostartTimer={config.autostartTimer}

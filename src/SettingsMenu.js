@@ -4,6 +4,7 @@ import './SettingsMenu.css';
 const SettingsMenu = ({ config, setConfig }) => {
     const [alertInterval, setAlertInterval] = React.useState(config.alertInterval);
     const [autostartTimer, setAutostartTimer] = React.useState(config.autostartTimer);
+    const [editBehavior, setEditBehavior] = React.useState(config.editBehavior);
 
     const updateTimerInterval = (e) => {
         // uses minutes instead of seconds, and I noticed this uses implicit casting... 
@@ -14,6 +15,11 @@ const SettingsMenu = ({ config, setConfig }) => {
     const updateAutostartTimer = (e) => {
         setAutostartTimer(e.target.checked);
         setConfig({...config, autostartTimer: e.target.checked});
+    }
+
+    const updateEditBehavior = (e) => {
+        setEditBehavior(e.target.checked);
+        setConfig({...config, editBehavior: e.target.checked});
     }
 
     return (
@@ -29,7 +35,7 @@ const SettingsMenu = ({ config, setConfig }) => {
         />
         <br />
 
-        <label htmlFor="timerAlertInveral">Alert every </label>
+        <label htmlFor="timerAlertInterval">Alert every </label>
         <input
           id="timerAlertInterval"
           type="number"
@@ -38,7 +44,16 @@ const SettingsMenu = ({ config, setConfig }) => {
           value={alertInterval}
           onChange={updateTimerInterval}
         />
-        <p>minutes.</p>
+        <p style={{display: 'inline-block'}}>  minute(s).</p>
+        <br />
+        
+        <h3>Behavior</h3>
+        <label>Edit Call Actions </label>
+        <input
+          type="checkbox"
+          checked={editBehavior}
+          onChange={updateEditBehavior}
+        />
       </>
     );
 }

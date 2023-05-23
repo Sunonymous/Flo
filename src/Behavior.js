@@ -1,17 +1,16 @@
 import "./Behavior.css";
 import React from "react";
 
-const templateBehaviors = [
-  "Acknowledge",
-  "Probing Questions",
-  "What Else?",
-  "Account Audit",
-  "NBA",
-  "Recap",
-];
+const templateBehaviors = "Acknowledge\nProbing Questions\nWhat Else?\nAccount Audit\nNBA\nRecap";
 
-export default function Behavior({ resetter }) {
+const splitOnLines = (s) => s.split('\n');
+
+export default function Behavior({ resetter, editActive }) {
   const [completedIDs, setCompletedIDs] = React.useState([]);
+  // right now behavior state is localized. in the future if this is to be saved to
+  // the configuration, something will need to change.
+  const [behaviors, setBehaviors] = React.useState(splitOnLines(templateBehaviors));
+  const [behaviorList, setBehaviorList] = React.useState(templateBehaviors);
 
   const undoLastAction = () => {
     setCompletedIDs(completedIDs.slice(0, completedIDs.length - 1));
@@ -33,26 +32,26 @@ export default function Behavior({ resetter }) {
   const reset = () => setCompletedIDs([]);
   resetter.on("newCall", reset);
 
+  // returns formatting for individual actions
   const callAction = (behavior, id) => {
     const finishAction = (e) => setCompletedIDs(completedIDs.concat(id));
 
     return (
       <div className="actionWrapper noselect" key={id} onClick={finishAction}>
-        <label className="noselect">{behavior}</label>
+        <label className="noselect">{behavior || '(empty)'}</label>
         <br />
       </div>
     );
   };
 
-  // if there are no behaviors, let user know
-  if (templateBehaviors.length === 0) {
-    return (
-      <p className="infoMessage noselect">No behaviors are present... what do we do?</p>
-    );
-  }
+  React.useEffect(() => {
+    const individualActions = splitOnLines(behaviorList);
+    setBehaviors(individualActions);
+    setCompletedIDs([]);
+  }, [behaviorList]);
 
   // if all behaviors are completed, display such
-  if (completedIDs.length === templateBehaviors.length) {
+  if (completedIDs.length === behaviors.length) {
     return (
       <p className="infoMessage noselect">
         Behaviors complete! You have mastered the call.
@@ -61,6 +60,7 @@ export default function Behavior({ resetter }) {
   }
   // if behaviors remain, display them
   // if at least one behavior has been completed, display an undo button
+  // display edit mode over behaviors if active
   return (
     <>
       {completedIDs.length > 0 && (
@@ -69,8 +69,16 @@ export default function Behavior({ resetter }) {
         </div>
       )}
       <div className="wrapper">
-        {templateBehaviors.map((b, id) =>
-          !completedIDs.includes(id) ? callAction(b, id) : null
+        {!editActive && behaviors.map((b, id) =>
+            !completedIDs.includes(id) ? callAction(b, id) : null
+          )}
+        {editActive && (
+          <textarea
+            className="behaviorEditor"
+            value={behaviorList}
+            rows={behaviors.length}
+            onChange={(e) => setBehaviorList(e.target.value)}
+          ></textarea>
         )}
       </div>
     </>
