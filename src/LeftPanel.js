@@ -6,6 +6,11 @@ const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const togglePanel = () => setIsOpen(!isOpen);
+  const dismissPanel = (e) => {
+    // this feels super hacky
+    if (Array.from(e.target.classList).includes('panel')) return;
+    setIsOpen(false); 
+  }
 
   React.useEffect(() => {
     const toggleOnKey = (e) => {
@@ -20,11 +25,13 @@ const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
   }, [isOpen, shortcutKey]);
 
   return (
-    <div className={`panel ${isOpen ? "open" : ""}`}>
-      <div className="tab" onClick={togglePanel}>
-        <span>{tabLabel}</span>
+    <div className={'backdrop' + (isOpen ? ' open' : '')} onClick={dismissPanel}>
+      <div className={`panel ${isOpen ? "open" : ""}`}>
+        <div className="tab" onClick={togglePanel}>
+          <span>{tabLabel}</span>
+        </div>
+        <div className="content">{children}</div>
       </div>
-      <div className="content">{children}</div>
     </div>
   );
 };
