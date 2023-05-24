@@ -24,19 +24,19 @@
     right:    48px;
     font-weight: 800;
     color: white;
-    font-size: 24px;
+    font-size: 2rem;
     border-radius: 50%;
 }
 
 @keyframes bulgeAnimation {
     0% {
-      font-size: 24px;
+      font-size: 2rem;
     }
     50% {
-      font-size: 128px;
+      font-size: 9rem;
     }
     100% {
-      font-size: 24px;
+      font-size: 2rem;
     }
   }
   
