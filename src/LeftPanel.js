@@ -5,7 +5,11 @@ import './LeftPanel.css';
 const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const togglePanel = () => setIsOpen(!isOpen);
+  const togglePanel = (e) => {
+    e.stopPropagation();
+    setIsOpen(!isOpen);
+  }
+
   const dismissPanel = (e) => {
     // this feels super hacky
     if (Array.from(e.target.classList).includes('panel')) return;
@@ -25,7 +29,7 @@ const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
   }, [isOpen, shortcutKey]);
 
   return (
-    <div className={'backdrop' + (isOpen ? ' open' : '')} onClick={dismissPanel}>
+    <div className={`backdrop ${isOpen ? "open" : ""}`} onClick={dismissPanel}>
       <div className={`panel ${isOpen ? "open" : ""}`}>
         <div className="tab" onClick={togglePanel}>
           <span>{tabLabel}</span>
