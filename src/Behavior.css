@@ -3,6 +3,7 @@
     padding: 1rem;
     border: 2px solid white;
     border-radius: 8px; 
+    z-index: 1;
 }
 
 .noselect {
@@ -26,6 +27,7 @@
 
 .infoMessage {
     margin: 36px;
+    z-index: 1;
 }
 
 .actionBox {
