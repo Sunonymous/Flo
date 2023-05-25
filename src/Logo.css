@@ -1,8 +1,9 @@
 .logo {
     position: fixed;
-    top: 0.25rem; 
-    left: 0.75rem;
+    top: 0.75rem; 
+    left: 1.5rem;
     font-style: italic;
+    letter-spacing: 12px;
     color: rgb(255, 255, 255, 0.5);
     background: none;
     animation: hoverAnimation 4s ease-in-out infinite;

@@ -50,7 +50,11 @@ function App() {
           options={fireworksSettings}
         />
         <header className="App-header">
-          <Logo text="flo" />
+          <Logo text="flo" font='Kaushan Script' />
+          <Logo text="flo" font='Kaushan Script' />
+          <Logo text="flo" font='Kaushan Script' />
+          <Logo text="flo" font='Kaushan Script' />
+          <Logo text="flo" font='Kaushan Script' />
           <button
             className="resetButton"
             onClick={() => resetter.emit("newCall")}
