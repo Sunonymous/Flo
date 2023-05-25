@@ -54,7 +54,7 @@ function App() {
         <header className="App-header">
           <Logo text="flo" font="Kaushan Script" />
           <button
-            className="resetButton"
+            className="resetButton noselect"
             onClick={() => resetter.emit("newCall")}
           >
             New Call
