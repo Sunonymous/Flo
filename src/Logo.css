@@ -4,9 +4,9 @@
     left: 1.5rem;
     font-style: italic;
     letter-spacing: 12px;
-    color: rgb(255, 255, 255, 0.5);
+    color: rgb(255, 255, 255, 0.75);
     background: none;
-    animation: hoverAnimation 4s ease-in-out infinite;
+    animation: hoverAnimation 4s ease-in-out infinite, fadeAnimation 8s ease-in-out infinite;
     user-select: none;
   }
   
@@ -16,6 +16,15 @@
     }
     50% {
       transform: translateY(-5px);
+    }
+  }
+  
+  @keyframes fadeAnimation {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
     }
   }
   

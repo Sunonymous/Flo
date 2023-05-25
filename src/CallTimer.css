@@ -2,16 +2,28 @@
 
 .timerToggle {
     position: fixed;
-    bottom:   16px;
-    right:    16px;
-    color: white;
-    font-size: 24px;
+    bottom:   -5rem;
+    right:    -3.5rem;
+    color: rgb(255, 255, 255, 2.5%);
+    font-size: 10rem;
     background: none;
     border: none;
+    transform: rotateZ(-90deg);
+    transition: transform 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.timerToggle.active {
+    transform: rotateZ(0deg);
+    color: rgb(255, 255, 255, 15%);
 }
 
 .timerToggle:hover {
-    color: #E20074;
+    color: rgb(226, 0, 116, 0.5);
+}
+
+.timerToggle.active:hover {
+    color: rgb(226, 0, 116, 0.85);
 }
 
 .timerToggle:focus {
@@ -26,6 +38,7 @@
     color: white;
     font-size: 2rem;
     border-radius: 50%;
+    z-index: 1;
 }
 
 @keyframes bulgeAnimation {
@@ -39,6 +52,19 @@
       font-size: 2rem;
     }
   }
+
+  @keyframes blinkAnimation {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  
+  .blinking {
+    animation: blinkAnimation 2s ease-in-out infinite;
+  } 
   
   .intervalAlert {
     animation: bulgeAnimation 1s ease-in-out;

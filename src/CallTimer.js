@@ -47,7 +47,8 @@ const Timer = ({ resetter, autostartTimer, alertInterval }) => {
  
   // if timer reaches alert interval, add a special animation
   const timerTextClass =
-    "timeDigits noselect " +
+    "timeDigits noselect " + (isActive ? '' : 'blinking')
+     +
     (seconds % (alertInterval * SECONDS_IN_MINUTE) === 0 && isActive
       ? "intervalAlert"
       : "");
@@ -55,11 +56,12 @@ const Timer = ({ resetter, autostartTimer, alertInterval }) => {
   return (
     <div>
       <button
-        className="timerToggle noselect"
+        className={"timerToggle noselect " + (isActive ? 'active' : '')}
         onClick={timerToggle}
         onFocus={(e) => e.target.blur()}
       >
-        {isActive ? " \u23F8" : "\u23F5"}
+        {/* {isActive ? " \u23F8" : "\u23F5"} */}
+        {"\u23F1"}
       </button>
       <p  className={timerTextClass}>{formatTime(seconds)}</p>
     </div>
