@@ -34,10 +34,12 @@
     margin: 4px;
 }
 
-.undoButton {
+.btn {
     width: 42px; 
     height: 42px;
     margin: 4px; 
+    margin-left: auto;
+    margin-right: auto;
     padding: 2px 4px;
     background: white;
     color: black;
@@ -46,7 +48,7 @@
     font-weight: 500;
 }
 
-.undoButton:hover {
+.btn:hover {
     background: #E20074;
     color: white;
     border: 2px solid white;

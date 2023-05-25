@@ -27,6 +27,8 @@ function App() {
 
   const fireworksRef = useRef(null);
 
+  const saveBehaviors = (e) => setConfig({...config, editBehavior: false});
+
   // reset button
   useEffect(() => {
     const resetCall = (e) => {
@@ -45,23 +47,24 @@ function App() {
     <div className="App">
       <div className="fireworks">
         <Fireworks
-          className='fireworks'
+          className="fireworks"
           ref={fireworksRef}
           options={fireworksSettings}
         />
         <header className="App-header">
-          <Logo text="flo" font='Kaushan Script' />
-          <Logo text="flo" font='Kaushan Script' />
-          <Logo text="flo" font='Kaushan Script' />
-          <Logo text="flo" font='Kaushan Script' />
-          <Logo text="flo" font='Kaushan Script' />
+          <Logo text="flo" font="Kaushan Script" />
           <button
             className="resetButton"
             onClick={() => resetter.emit("newCall")}
           >
             New Call
           </button>
-          <Behavior resetter={resetter} editActive={config.editBehavior} fireworksRef={fireworksRef}/>
+          <Behavior
+            resetter={resetter}
+            editActive={config.editBehavior}
+            fireworksRef={fireworksRef}
+            saveFunc={saveBehaviors}
+          />
           <Timer
             resetter={resetter}
             autostartTimer={config.autostartTimer}

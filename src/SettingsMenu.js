@@ -55,7 +55,7 @@ const SettingsMenu = ({ config, setConfig }) => {
           <label>Edit Call Actions </label>
           <input
             type="checkbox"
-            checked={editBehavior}
+            checked={config.editBehavior}
             onChange={updateEditBehavior}
           />
         </div>

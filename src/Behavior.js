@@ -4,7 +4,7 @@ import React from "react";
 const templateBehaviors = "Acknowledge\nProbing Questions\nWhat Else?\nAccount Audit\nNBA\nRecap";
 const splitOnLines = (s) => s.split('\n');
 
-export default function Behavior({ resetter, editActive, fireworksRef }) {
+export default function Behavior({ resetter, editActive, saveFunc, fireworksRef }) {
   const [completedIDs, setCompletedIDs] = React.useState([]);
   // right now behavior state is localized. in the future if this is to be saved to
   // the configuration, something will need to change.
@@ -70,22 +70,28 @@ export default function Behavior({ resetter, editActive, fireworksRef }) {
   // display edit mode over behaviors if active
   return (
     <>
-      {completedIDs.length > 0 && (
-        <div className="undoButton noselect" onClick={undoLastAction}>
+      {completedIDs.length > 0 && !editActive && (
+        <div className="btn noselect" onClick={undoLastAction}>
           {"\u2B6F"}
         </div>
       )}
       <div className="wrapper">
-        {!editActive && behaviors.map((b, id) =>
+        {!editActive &&
+          behaviors.map((b, id) =>
             !completedIDs.includes(id) ? callAction(b, id) : null
           )}
         {editActive && (
-          <textarea
-            className="behaviorEditor"
-            value={behaviorList}
-            rows={behaviors.length}
-            onChange={(e) => setBehaviorList(e.target.value)}
-          ></textarea>
+          <>
+            <textarea
+              className="behaviorEditor"
+              value={behaviorList}
+              rows={behaviors.length}
+              onChange={(e) => setBehaviorList(e.target.value)}
+            ></textarea>
+            <div className="btn noselect" onClick={saveFunc}>
+              {"\u2611"}
+            </div>
+          </>
         )}
       </div>
     </>
