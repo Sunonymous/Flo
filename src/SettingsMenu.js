@@ -25,35 +25,40 @@ const SettingsMenu = ({ config, setConfig }) => {
     return (
       <>
         <h2>Settings</h2>
-        <hr></hr>
-        <h3>Timer</h3>
-        <label>Start timer on new call? </label>
-        <input
-          type="checkbox"
-          checked={autostartTimer}
-          onChange={updateAutostartTimer}
-        />
-        <br />
+        <hr />
 
-        <label htmlFor="timerAlertInterval">Alert every </label>
-        <input
-          id="timerAlertInterval"
-          type="number"
-          min={1}
-          max={60}
-          value={alertInterval}
-          onChange={updateTimerInterval}
-        />
-        <p style={{display: 'inline-block'}}>  minute(s).</p>
-        <br />
-        
-        <h3>Behavior</h3>
-        <label>Edit Call Actions </label>
-        <input
-          type="checkbox"
-          checked={editBehavior}
-          onChange={updateEditBehavior}
-        />
+        <div className="section">
+          <h3>Timer</h3>
+          <label>Start timer on new call? </label>
+          <input
+            type="checkbox"
+            checked={autostartTimer}
+            onChange={updateAutostartTimer}
+          />
+          <br />
+
+          <label htmlFor="timerAlertInterval">Alert every </label>
+          <input
+            id="timerAlertInterval"
+            type="number"
+            min={1}
+            max={60}
+            value={alertInterval}
+            onChange={updateTimerInterval}
+          />
+          <p style={{ display: "inline-block" }}> minute(s).</p>
+          <br />
+        </div>
+
+        <div className="section">
+          <h3>Behavior</h3>
+          <label>Edit Call Actions </label>
+          <input
+            type="checkbox"
+            checked={editBehavior}
+            onChange={updateEditBehavior}
+          />
+        </div>
       </>
     );
 }

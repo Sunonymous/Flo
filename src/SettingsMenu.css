@@ -1,0 +1,7 @@
+.section {
+    margin: 1rem;
+}
+
+input[type=number] {
+    width: 2.65rem;
+}
