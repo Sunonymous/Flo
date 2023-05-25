@@ -4,7 +4,9 @@ import './SettingsMenu.css';
 const SettingsMenu = ({ config, setConfig }) => {
     const [alertInterval, setAlertInterval] = React.useState(config.alertInterval);
     const [autostartTimer, setAutostartTimer] = React.useState(config.autostartTimer);
+    // eslint-disable-next-line
     const [editBehavior, setEditBehavior] = React.useState(config.editBehavior);
+    // disabling because cannot track local input state in non-local variable
 
     const updateTimerInterval = (e) => {
         // uses minutes instead of seconds, and I noticed this uses implicit casting... 
