@@ -1,7 +1,9 @@
 import './CallTimer.css';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import builtClass from './lib/builtClass';
 
 const SECONDS_IN_MINUTE = 60;
+const TIMED_CALL_STATES = ["talking", "paused"];
 
 // integer -> string
 const prefixWithZero = (n) => n < 10 ? '0' + n : String(n);
@@ -15,8 +17,7 @@ function formatTime(seconds) {
 }
 
 const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallState }) => {
-  const   [seconds, setSeconds] = useState(0);
-  // const [isActive, setIsActive] = useState(true);
+  const [seconds, setSeconds] = React.useState(0);
   const isActive = callState === 'talking';
 
   const resetTimer = () => {
@@ -31,13 +32,14 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
     setCallState(newState);
   }
 
-  useEffect(() => {
+  React.useEffect(() => {
     if (isActive) {
       const interval = setInterval(() => {
         setSeconds(seconds + 1);
       }, 1000);
       return () => clearInterval(interval);
     }
+    
     // disabling this warning because the "missing dependency" isActive is a direct
     // result of callState. When callState changes, isActive follows
     // eslint-disable-next-line
@@ -54,16 +56,16 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
   });
  
   // if timer reaches alert interval, add a special animation
-  const timerTextClass =
-    "timeDigits noselect " + (isActive ? '' : 'blinking')
-     +
-    (seconds % (alertInterval * SECONDS_IN_MINUTE) === 0 && isActive
-      ? "intervalAlert"
-      : "");
+  const atAlertInterval = (seconds % (alertInterval * SECONDS_IN_MINUTE) === 0);
+  const timerTextClass = builtClass(['timeDigits', 
+                                     'noselect',
+                                     [!isActive, 'blinking'],
+                                     [isActive && atAlertInterval, 'intervalAlert']]);
 
+  // Timer is only displayed in states which are actively timed.
   return (
     <>
-      {["talking", "paused"].includes(callState) && (
+      {TIMED_CALL_STATES.includes(callState) && (
         <div>
           <button
             className={"timerToggle noselect " + (isActive ? "active" : "")}
