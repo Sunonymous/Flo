@@ -24,6 +24,8 @@ function App() {
   // eslint-disable-next-line
   const [resetter, setResetter] = useState(new CallResetter());
   const [config, setConfig] = useState(defaultConfig);
+  // callState :: idle | talking | hold | complete
+  const [callState, setCallState] = useState('idle');
 
   const fireworksRef = useRef(null);
 
@@ -69,6 +71,8 @@ function App() {
             resetter={resetter}
             autostartTimer={config.autostartTimer}
             alertInterval={config.alertInterval}
+            callState={callState}
+            setCallState={setCallState}
           />
         </header>
         <LeftPanel tabLabel={"\u2699"} shortcutKey="s">

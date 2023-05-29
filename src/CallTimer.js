@@ -14,17 +14,22 @@ function formatTime(seconds) {
          : `${seconds}`;
 }
 
-const Timer = ({ resetter, autostartTimer, alertInterval }) => {
+const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallState }) => {
   const   [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(true);
+  // const [isActive, setIsActive] = useState(true);
+  const isActive = callState === 'talking';
 
   const resetTimer = () => {
     setSeconds(0);
-    setIsActive(autostartTimer);
+    // setIsActive(autostartTimer);
+    setCallState(autostartTimer ? 'talking' : 'idle');
   }
   resetter.on('newCall', resetTimer);
 
-  const timerToggle = () => setIsActive(!isActive)
+  const timerToggle = () => {
+    const newState = isActive ? 'paused' : 'talking';
+    setCallState(newState);
+  }
 
   useEffect(() => {
     if (isActive) {
@@ -33,7 +38,7 @@ const Timer = ({ resetter, autostartTimer, alertInterval }) => {
       }, 1000);
       return () => clearInterval(interval);
     }
-  }, [isActive, seconds]);
+  }, [callState, seconds]);
 
   // timer toggle keybinding
   React.useEffect(() => {
