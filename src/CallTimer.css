@@ -2,9 +2,10 @@
 
 .timerToggle {
     position: fixed;
-    bottom:   -5rem;
+    bottom:   -6.5rem;
     right:    -3.5rem;
     color: rgb(255, 255, 255, 2.5%);
+    font-family: 'Noto Sans Symbols 2';
     font-size: 10rem;
     background: none;
     border: none;

@@ -60,7 +60,6 @@ const Timer = ({ resetter, autostartTimer, alertInterval }) => {
         onClick={timerToggle}
         onFocus={(e) => e.target.blur()}
       >
-        {/* {isActive ? " \u23F8" : "\u23F5"} */}
         {"\u23F1"}
       </button>
       <p  className={timerTextClass}>{formatTime(seconds)}</p>
