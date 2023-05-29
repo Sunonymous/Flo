@@ -24,7 +24,7 @@ function App() {
   // eslint-disable-next-line
   const [resetter, setResetter] = useState(new CallResetter());
   const [config, setConfig] = useState(defaultConfig);
-  // callState :: idle | talking | hold | complete
+  // callState :: idle | talking | paused | hold | complete
   const [callState, setCallState] = useState('idle');
 
   const fireworksRef = useRef(null);
