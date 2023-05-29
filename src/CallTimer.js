@@ -38,6 +38,9 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
       }, 1000);
       return () => clearInterval(interval);
     }
+    // disabling this warning because the "missing dependency" isActive is a direct
+    // result of callState. When callState changes, isActive follows
+    // eslint-disable-next-line
   }, [callState, seconds]);
 
   // timer toggle keybinding
@@ -59,17 +62,21 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
       : "");
 
   return (
-    <div>
-      <button
-        className={"timerToggle noselect " + (isActive ? 'active' : '')}
-        onClick={timerToggle}
-        onFocus={(e) => e.target.blur()}
-      >
-        {"\u23F1"}
-      </button>
-      <p  className={timerTextClass}>{formatTime(seconds)}</p>
-    </div>
+    <>
+      {["talking", "paused"].includes(callState) && (
+        <div>
+          <button
+            className={"timerToggle noselect " + (isActive ? "active" : "")}
+            onClick={timerToggle}
+            onFocus={(e) => e.target.blur()}
+          >
+            {"\u23F1"}
+          </button>
+          <p className={timerTextClass}>{formatTime(seconds)}</p>
+        </div>
+      )}
+    </>
   );
 };
-      // className="timeDigits noselect"
+
 export default Timer;
