@@ -39,7 +39,7 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
       }, 1000);
       return () => clearInterval(interval);
     }
-    
+
     // disabling this warning because the "missing dependency" isActive is a direct
     // result of callState. When callState changes, isActive follows
     // eslint-disable-next-line
