@@ -59,7 +59,7 @@ function App() {
             className="resetButton noselect"
             onClick={() => resetter.emit("newCall")}
           >
-            New Call
+            {callState === 'idle' ? 'Start Call' : 'New Call'}
           </button>
           <Behavior
             resetter={resetter}

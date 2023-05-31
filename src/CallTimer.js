@@ -1,6 +1,7 @@
 import './CallTimer.css';
 import React from 'react';
 import builtClass from './lib/builtClass';
+import { BsStopwatch, BsStopwatchFill } from 'react-icons/bs';
 
 const SECONDS_IN_MINUTE = 60;
 const TIMED_CALL_STATES = ["talking", "paused"];
@@ -23,7 +24,7 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
   const resetTimer = () => {
     setSeconds(0);
     // setIsActive(autostartTimer);
-    setCallState(autostartTimer ? 'talking' : 'idle');
+    setCallState(autostartTimer ? 'talking' : 'paused');
   }
   resetter.on('newCall', resetTimer);
 
@@ -72,7 +73,7 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
             onClick={timerToggle}
             onFocus={(e) => e.target.blur()}
           >
-            {"\u23F1"}
+            {isActive ? <BsStopwatch /> : <BsStopwatchFill />}
           </button>
           <p className={timerTextClass}>{formatTime(seconds)}</p>
         </div>

@@ -2,14 +2,14 @@
 
 .timerToggle {
     position: fixed;
-    bottom:   -6.5rem;
-    right:    -3.5rem;
+    bottom:   -1.5rem;
+    right:    -0.7rem;
     color: rgb(255, 255, 255, 2.5%);
     font-family: 'Noto Sans Symbols 2';
-    font-size: 10rem;
+    font-size: 8rem;
     background: none;
     border: none;
-    transform: rotateZ(-90deg);
+    transform: rotateZ(-90deg) translateX(-5px) translateY(-25px);
     transition: transform 0.3s ease-in-out;
     z-index: 0;
 }
@@ -33,8 +33,8 @@
 
 .timeDigits {
     position: fixed;
-    bottom:   16px;
-    right:    48px;
+    bottom:   0.75rem;
+    right:    1rem;
     font-weight: 800;
     color: white;
     font-size: 2rem;
