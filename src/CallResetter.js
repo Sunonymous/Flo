@@ -15,7 +15,7 @@ export default class CallResetter {
       return;
     }
     const indexToRemove = this.events[event].indexOf(handler);
-    this.events.splice(indexToRemove, 1);
+    this.events[event].splice(indexToRemove, 1);
   }
 
   emit(event, data) {
