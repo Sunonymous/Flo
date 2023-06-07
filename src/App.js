@@ -59,14 +59,16 @@ function App() {
             className="resetButton noselect"
             onClick={() => resetter.emit("newCall")}
           >
-            {callState === 'idle' ? 'Start Call' : 'New Call'}
+            {callState === "idle" ? "Start Call" : "New Call"}
           </button>
-          <Behavior
-            resetter={resetter}
-            editActive={config.editBehavior}
-            fireworksRef={fireworksRef}
-            saveFunc={saveBehaviors}
-          />
+          {callState !== "idle" && (
+            <Behavior
+              resetter={resetter}
+              editActive={config.editBehavior}
+              fireworksRef={fireworksRef}
+              saveFunc={saveBehaviors}
+            />
+          )}
           <Timer
             resetter={resetter}
             autostartTimer={config.autostartTimer}

@@ -1,15 +1,21 @@
 import "./Behavior.css";
 import React from "react";
 
-const templateBehaviors = "Acknowledge\nProbing Questions\nWhat Else?\nAccount Audit\nNBA\nRecap";
+// default call types: inbound | outboud | collect
+const templateBehaviors = {
+  inbound:  "Acknowledge\nProbing Questions\nWhat Else?\nAccount Audit\nNBA\nRecap",
+  outbound: "Recap\nRevisit\nPersonal Touch",
+  collect:  "Empathy\nFull Balance\nPast Due\n30 Days Past Due\nAnything?",
+};
 const splitOnLines = (s) => s.split('\n');
 
 export default function Behavior({ resetter, editActive, saveFunc, fireworksRef }) {
+  const [callType, setCallType] = React.useState('inbound');
   const [completedIDs, setCompletedIDs] = React.useState([]);
   // right now behavior state is localized. in the future if this is to be saved to
   // the configuration, something will need to change.
-  const [behaviors, setBehaviors] = React.useState(splitOnLines(templateBehaviors));
-  const [behaviorList, setBehaviorList] = React.useState(templateBehaviors);
+  const [behaviors, setBehaviors] = React.useState(splitOnLines(templateBehaviors[callType]));
+  const [behaviorList, setBehaviorList] = React.useState(templateBehaviors[callType]);
   
   const undoLastAction = () => {
     setCompletedIDs(completedIDs.slice(0, completedIDs.length - 1));
@@ -28,7 +34,9 @@ export default function Behavior({ resetter, editActive, saveFunc, fireworksRef 
     // eslint-disable-next-line
   }, [completedIDs]);
 
-  const reset = () => setCompletedIDs([]);
+  const reset = () => {
+    setCompletedIDs([]);
+  }
   resetter.on("newCall", reset);
 
   React.useEffect(() => {
@@ -65,11 +73,22 @@ export default function Behavior({ resetter, editActive, saveFunc, fireworksRef 
       </>
     );
   }
+
+  const switchCallType = (e) => {
+    setBehaviorList(templateBehaviors[e.target.value]);
+    setBehaviors(splitOnLines(templateBehaviors[e.target.value]));
+  }
+
   // if behaviors remain, display them
   // if at least one behavior has been completed, display an undo button
   // display edit mode over behaviors if active
   return (
     <>
+      {/* !editActive && (<select className="callTypeSelector" onChange={switchCallType}>
+        {Object.keys(templateBehaviors).map((t) => {
+          return <option key={t} value={t}>{t}</option>
+        })}
+      </select>) */}
       {completedIDs.length > 0 && !editActive && (
         <div className="btn noselect" onClick={undoLastAction}>
           {"\u2B6F"}
