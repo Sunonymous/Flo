@@ -3,6 +3,9 @@ import "./StatsMenu.css";
 import timeFormatter from "./lib/formatTime";
 import defaultBehaviors from "./data/defaultBehaviors";
 
+const sum = (a, b) => a + b;
+const averageArray = (arr) => Math.floor(arr.reduce(sum) / arr.length);
+
 const mergeAdd = (obj1, obj2) => {
   const result = { ...obj1 };
   Object.keys(obj2).forEach((k) => {
@@ -33,13 +36,13 @@ const initialCallStats = {
 
 const StatsMenu = ({ config, resetter }) => {
   const [behaviorStats, setBehaviorStats] = React.useState(initialBehaviorStats);
-  const [callStats, setCallStats] = React.useState(initialCallStats);
+  const         [callStats, setCallStats] = React.useState(initialCallStats);
+  const         [lengthLog, setLengthLog] = React.useState([]);
 
   const activeBehaviors = config.behaviorString.split('\n');
   const includedInActiveBehaviors = (b) => activeBehaviors.includes(b);
 
   React.useEffect(() => {
-    //
     const updateBehaviors = (data) =>
       setBehaviorStats(mergeAdd(behaviorStats, frequencies(data)));
 
@@ -55,6 +58,7 @@ const StatsMenu = ({ config, resetter }) => {
         shortestCall: Math.min(originalShortest, newTime),
         longestCall: Math.max(callStats.longestCall, newTime),
       });
+      setLengthLog(lengthLog.concat(newTime));
     };
 
     resetter.on("completeCall", updateBehaviors);
@@ -109,6 +113,8 @@ const StatsMenu = ({ config, resetter }) => {
             <span>Shortest: {timeFormatter.words(callStats.shortestCall)}</span>
             <br />
             <span>Longest: {timeFormatter.words(callStats.longestCall)}</span>
+            <br />
+            <span>Average: {timeFormatter.words(averageArray(lengthLog))}</span>
             <br />
           </>
         )}
