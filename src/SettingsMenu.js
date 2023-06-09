@@ -8,6 +8,8 @@ const SettingsMenu = ({ config, setConfig }) => {
     // eslint-disable-next-line
     const [editBehavior, setEditBehavior] = React.useState(config.editBehavior);
     // disabling because cannot track local input state in non-local variable
+   
+    const hasUserData = !!localStorage.getItem('userData');
 
     const updateTimerInterval = (e) => {
         // uses minutes instead of seconds, and I noticed this uses implicit casting... 
@@ -62,15 +64,16 @@ const SettingsMenu = ({ config, setConfig }) => {
             onChange={updateEditBehavior}
           />
         </div>
-        <div className='hangingAtBottom'>
+        {hasUserData && (<div className='hangingAtBottom'>
           <p>Delete user data?</p>
           <div className="settingButton serious"
           onClick={() => {
             localStorage.removeItem('userData');
+            alert('If there was any data saved, it\'s gone now!');
           }}>
             <MdDeleteForever size={32} />
           </div>
-        </div>
+        </div>)}
       </div>
     );
 }
