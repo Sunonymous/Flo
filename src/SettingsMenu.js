@@ -1,5 +1,6 @@
 import React from 'react';
 import './SettingsMenu.css';
+import { MdDeleteForever } from 'react-icons/md';
 
 const SettingsMenu = ({ config, setConfig }) => {
     const [alertInterval, setAlertInterval] = React.useState(config.alertInterval);
@@ -25,13 +26,13 @@ const SettingsMenu = ({ config, setConfig }) => {
     }
 
     return (
-      <>
+      <div className="settingsMenu">
         <h2>Settings</h2>
         <hr />
 
         <div className="section">
           <h3>Timer</h3>
-          <label>Start timer on new call? </label>
+          <label>Start Calls Instantly </label>
           <input
             type="checkbox"
             checked={autostartTimer}
@@ -61,7 +62,16 @@ const SettingsMenu = ({ config, setConfig }) => {
             onChange={updateEditBehavior}
           />
         </div>
-      </>
+        <div className='hangingAtBottom'>
+          <p>Delete user data?</p>
+          <div className="settingButton serious"
+          onClick={() => {
+            localStorage.removeItem('userData');
+          }}>
+            <MdDeleteForever size={32} />
+          </div>
+        </div>
+      </div>
     );
 }
 

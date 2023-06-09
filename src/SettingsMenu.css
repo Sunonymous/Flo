@@ -1,7 +1,39 @@
+.settingsMenu {
+    position: relative;
+    height: 100vh;
+}
+
 .section {
     margin: 1rem;
 }
 
 input[type=number] {
     width: 2.65rem;
+}
+
+.hangingAtBottom {
+  width: 100%;
+  position: absolute; 
+  left: 0%;
+  bottom: 5%;
+  text-align: center; 
+}
+
+.settingButton {
+  width: 2rem;
+  height: 2rem;
+  position: relative; 
+  left: 42%;
+  border-radius: 50%;
+  background: white;
+  border: 1px solid red;
+}
+
+.serious:hover {
+  color: white;
+  background: red;
+}
+
+.action {
+
 }

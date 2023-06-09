@@ -1,12 +1,22 @@
 import React, { useState } from 'react';
 import './LeftPanel.css';
 
-// passed children for props and a string to show on tab
-const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
-  const [isOpen, setIsOpen] = useState(false);
+// must be given an array containing special panel objects
+// they look like {
+// {
+//   shortcut: 's',
+//   content: (<p>Whatever you need!</p>),
+//   tab: (<p>{'\u002B'}</p>),
+// }
+// 
 
-  const togglePanel = (e) => {
-    e.stopPropagation();
+// passed children for props and a string to show on tab
+const LeftPanel = ({ children, tabLabel, shortcutKey, panels }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [contentVisible, setContentVisible] = useState(0);
+
+  const togglePanel = (idx) => {
+    setContentVisible(idx);
     setIsOpen(!isOpen);
   }
 
@@ -18,23 +28,50 @@ const LeftPanel = ({ children, tabLabel, shortcutKey }) => {
 
   React.useEffect(() => {
     const toggleOnKey = (e) => {
-      if (e.key === shortcutKey && document.activeElement.nodeName !== 'TEXTAREA') {
-        setIsOpen(!isOpen);
-      }
-    }
+      const togglePanelKeyboard = () => setIsOpen(!isOpen);
+
+      panels.forEach((panel, idx) => {
+        if (
+          e.key === panel.shortcut &&
+          document.activeElement.nodeName !== "TEXTAREA"
+        ) {
+          setContentVisible(idx);
+          togglePanelKeyboard(); 
+        }
+      });
+    };
 
     document.addEventListener('keyup', toggleOnKey);
 
     return () => document.removeEventListener('keyup', toggleOnKey);
-  }, [isOpen, shortcutKey]);
+  }, [isOpen, shortcutKey, panels]);
+
+  const Tab = (panel, idx) => {
+    return (
+      <div
+        key={idx}
+        className={`tab ${isOpen && contentVisible !== idx ? "hidden" : ""}`}
+        onClick={(e) => {
+          e.stopPropagation();
+          togglePanel(idx);
+        }}
+      >
+        <div className="tabContent">{panel.tab}</div>
+      </div>
+    );
+  }
 
   return (
-    <div className={`backdrop ${isOpen ? "open" : ""}`} onClick={clickOnBackdrop}>
+    <div
+      className={`backdrop ${isOpen ? "open" : ""}`}
+      onClick={clickOnBackdrop}
+    >
+      {/* {panels.map(Panel)} */}
       <div className={`panel ${isOpen ? "open" : ""}`}>
-        <div className="tab" onClick={togglePanel}>
-          <span>{tabLabel}</span>
+        <div className="allTabs">
+          {panels.map(Tab)}
         </div>
-        <div className="content">{children}</div>
+        <div className="content">{panels[contentVisible].content}</div>
       </div>
     </div>
   );

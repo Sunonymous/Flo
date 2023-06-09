@@ -1,32 +1,32 @@
 import './CallTimer.css';
 import React from 'react';
+import timeFormatter from './lib/formatTime';
 import builtClass from './lib/builtClass';
 import { BsStopwatch, BsStopwatchFill } from 'react-icons/bs';
 
 const SECONDS_IN_MINUTE = 60;
 const TIMED_CALL_STATES = ["talking", "paused"];
 
-// integer -> string
-const prefixWithZero = (n) => n < 10 ? '0' + n : String(n);
-
-// integer -> string
-function formatTime(seconds) {
-    const minutes = Math.floor(seconds / SECONDS_IN_MINUTE);
-    return minutes > 0 ? 
-           `${minutes}:${prefixWithZero(seconds % SECONDS_IN_MINUTE)}`
-         : `${seconds}`;
-}
-
 const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallState }) => {
   const [seconds, setSeconds] = React.useState(0);
   const isActive = callState === 'talking';
 
-  const resetTimer = () => {
-    setSeconds(0);
-    // setIsActive(autostartTimer);
-    setCallState(autostartTimer ? 'talking' : 'paused');
-  }
-  resetter.on('newCall', resetTimer);
+  // event registrations
+  React.useEffect(() => {
+    const resetTimer = () => {
+      setSeconds(0);
+      setCallState('talking');
+    }
+    const updateRecords = () => resetter.emit('updateCallLengths', seconds)
+
+    resetter.on('newCall', resetTimer);
+    resetter.on('completeCall', updateRecords);
+
+    return () => {
+      resetter.off('newCall', resetTimer);
+      resetter.off('completeCall', updateRecords);
+    }
+  });
 
   const timerToggle = () => {
     const newState = isActive ? 'paused' : 'talking';
@@ -75,7 +75,7 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
           >
             {isActive ? <BsStopwatch /> : <BsStopwatchFill />}
           </button>
-          <p className={timerTextClass}>{formatTime(seconds)}</p>
+          <p className={timerTextClass}>{timeFormatter.clock(seconds)}</p>
         </div>
       )}
     </>

@@ -1,0 +1,65 @@
+.tooSmall {
+    display: none;
+    padding: 0.25rem;
+}
+
+.statsPanel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.section {
+    display: block;
+}
+
+@media (max-width: 600px) {
+    .tooSmall {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 0%;
+    }
+
+    .section {
+        display: none;
+    }
+}
+
+.totalCalls {
+    color: #E20074; 
+    font-size: 1.5rem;
+}
+
+.borderLeftRight {
+    border-left:  1px solid #E20074; 
+    border-right: 1px solid #E20074; 
+}
+
+.stat {
+    width: 100%;
+    padding: 4px; 
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.stat-name {
+    flex: 3;
+    font-size: 1rem; 
+}
+
+.stat-fraction {
+    flex: 1;
+}
+
+.stat-percent {
+    flex: 1.5;
+}
+
+.upwardNudge {
+    position: relative;
+    bottom: 4px; 
+}

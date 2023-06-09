@@ -8,7 +8,19 @@ function formatTime(seconds) {
     const minutes = Math.floor(seconds / SECONDS_IN_MINUTE);
     return minutes > 0 ? 
            `${minutes}:${prefixWithZero(seconds % SECONDS_IN_MINUTE)}`
-         : `${seconds}`;
+         : `${seconds} `;
 }
 
-export default formatTime;
+function formatLapse(seconds) {
+    const minutes = Math.floor(seconds / SECONDS_IN_MINUTE);
+    return minutes > 0 ? 
+           `${minutes} min. ${prefixWithZero(seconds % SECONDS_IN_MINUTE)} sec.`
+         : `${seconds} sec.`;
+}
+
+const timeFormatter = {
+  clock: formatTime,
+  words: formatLapse,
+};
+
+export default timeFormatter;
