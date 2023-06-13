@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
 import './LeftPanel.css';
+import React, { useState } from 'react';
 
 // must be given an array containing special panel objects
 // they look like {
@@ -12,7 +12,7 @@ import './LeftPanel.css';
 
 // passed children for props and a string to show on tab
 const LeftPanel = ({ children, tabLabel, shortcutKey, panels }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const                 [isOpen, setIsOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(0);
 
   const togglePanel = (idx) => {

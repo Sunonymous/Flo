@@ -9,6 +9,7 @@ import CallResetter from './CallResetter';
 import SettingsMenu from './SettingsMenu';
 import StatsMenu from './StatsMenu';
 import { Fireworks } from '@fireworks-js/react';
+import { initialCallStats } from './StatsMenu';
 import { SlCallIn } from 'react-icons/sl';
 import { MdSettings } from 'react-icons/md';
 import { ImStatsBars } from 'react-icons/im';
@@ -42,6 +43,7 @@ function App() {
   const [config, setConfig] = useState(loadConfig());
   // callState :: idle | talking | paused | hold | complete
   const [callState, setCallState] = useState('idle');
+  const [callStats, setCallStats] = useState(initialCallStats);
 
   const fireworksRef = useRef(null);
 
@@ -129,7 +131,7 @@ function App() {
            shortcut: 's',
           },
           {tab: (<ImStatsBars />),
-           content: (<StatsMenu config={config} resetter={resetter} />),
+           content: (<StatsMenu callStats={callStats} setCallStats={setCallStats} config={config} resetter={resetter} />),
            shortcut: 'a',
           },
         ]}>

@@ -28,15 +28,14 @@ const frequencies = (arr) =>
 
 const initialBehaviorStats = {};
 defaultBehaviors.array.forEach((k) => initialBehaviorStats[k] = 0);
-const initialCallStats = {
+export const initialCallStats = {
   totalCalls: 0,
   shortestCall: null,
   longestCall: null,
 }
 
-const StatsMenu = ({ config, resetter }) => {
+const StatsMenu = ({ config, resetter, callStats, setCallStats }) => {
   const [behaviorStats, setBehaviorStats] = React.useState(initialBehaviorStats);
-  const         [callStats, setCallStats] = React.useState(initialCallStats);
   const         [lengthLog, setLengthLog] = React.useState([]);
 
   const activeBehaviors = config.behaviorString.split('\n');
@@ -61,11 +60,11 @@ const StatsMenu = ({ config, resetter }) => {
       setLengthLog(lengthLog.concat(newTime));
     };
 
-    resetter.on("completeCall", updateBehaviors);
+    resetter.on("completeCall",      updateBehaviors);
     resetter.on("updateCallLengths", updateCallLengths);
     //
     return () => {
-      resetter.off("completeCall", updateBehaviors);
+      resetter.off("completeCall",      updateBehaviors);
       resetter.off("updateCallLengths", updateCallLengths);
     };
   });
