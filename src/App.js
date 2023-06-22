@@ -13,6 +13,10 @@ import { initialCallStats } from './StatsMenu';
 import { SlCallIn } from 'react-icons/sl';
 import { MdSettings } from 'react-icons/md';
 import { ImStatsBars } from 'react-icons/im';
+import { useSelector, useDispatch } from 'react-redux';
+
+// some of these may end up moving into separate components. remove later if unused in this file
+import { startCall, completeCall, resetCall, selectCallState } from './features/callSlice';
 
 // for further customization, visit:
 // https://github.com/crashmax-dev/fireworks-js#fireworks-jsreact
@@ -41,9 +45,12 @@ function App() {
   // eslint-disable-next-line
   const [resetter, setResetter] = useState(new CallResetter());
   const [config, setConfig] = useState(loadConfig());
-  // callState :: idle | talking | paused | hold | complete
-  const [callState, setCallState] = useState('idle');
   const [callStats, setCallStats] = useState(initialCallStats);
+
+  // moving state from react to redux
+  // callState :: idle | talking | complete
+  const [callState, setCallState] = useState('idle');
+  // const callState = useSelector(selectCallState);
 
   const fireworksRef = useRef(null);
 
