@@ -46,15 +46,15 @@ const Timer = ({ resetter, autostartTimer, alertInterval, callState, setCallStat
     // eslint-disable-next-line
   }, [callState, seconds]);
 
-  // timer toggle keybinding
-  React.useEffect(() => {
-    const toggle = (e) => {
-      if (e.key.toLowerCase() === "t") timerToggle();
-    };
-    document.addEventListener("keyup", toggle);
+  // timer toggle keybinding has been removed
+  // React.useEffect(() => {
+  //   const toggle = (e) => {
+  //     if (e.key.toLowerCase() === "t") timerToggle();
+  //   };
+  //   document.addEventListener("keyup", toggle);
 
-    return () => document.removeEventListener("keyup", toggle);
-  });
+  //   return () => document.removeEventListener("keyup", toggle);
+  // });
  
   // if timer reaches alert interval, add a special animation
   const atAlertInterval = (seconds % (alertInterval * SECONDS_IN_MINUTE) === 0);
