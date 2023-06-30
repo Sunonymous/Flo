@@ -1,8 +1,3 @@
-.tooSmall {
-    display: none;
-    padding: 0.25rem;
-}
-
 .statsPanel {
     height: 100%;
     display: flex;
@@ -13,19 +8,6 @@
 
 .section {
     display: block;
-}
-
-@media (max-width: 600px) {
-    .tooSmall {
-        display: block;
-        position: absolute;
-        top: 50%;
-        left: 0%;
-    }
-
-    .section {
-        display: none;
-    }
 }
 
 .totalCalls {

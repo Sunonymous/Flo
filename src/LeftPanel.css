@@ -84,3 +84,21 @@
   padding: 20px;
   z-index: 1000; 
 }
+
+.tooSmall {
+    display: none;
+    padding: 0.25rem;
+}
+
+@media (max-width: 600px) {
+    .tooSmall {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 0%;
+    }
+
+    .content {
+        display: none;
+    }
+}

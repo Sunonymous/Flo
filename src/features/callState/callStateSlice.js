@@ -5,8 +5,8 @@ export const callStateSlice = createSlice({
     initialState: 'idle',
     reducers: {
         startCall:    (state) => 'active',
-        completeCall: (state) => 'complete',
-        resetCall:    (state) => 'idle',}});
+        resetCall:    (state) => 'idle',
+    }});
 
 export const { startCall, completeCall, resetCall } = callStateSlice.actions;
 

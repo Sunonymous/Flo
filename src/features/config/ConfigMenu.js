@@ -1,30 +1,31 @@
 import React from 'react';
-import './SettingsMenu.css';
+import './ConfigMenu.css';
 import { MdDeleteForever } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectConfig, setAlertInterval,
+         setAutostartTimer, setEditBehavior } from './configSlice';
 
-const SettingsMenu = ({ config, setConfig }) => {
-    const [alertInterval, setAlertInterval] = React.useState(config.alertInterval);
-    const [autostartTimer, setAutostartTimer] = React.useState(config.autostartTimer);
-    // eslint-disable-next-line
-    const [editBehavior, setEditBehavior] = React.useState(config.editBehavior);
-    // disabling because cannot track local input state in non-local variable
+const SettingsMenu = ({ setConfig }) => {
+    const dispatch = useDispatch();
+    const config   = useSelector(selectConfig);
    
     const hasUserData = !!localStorage.getItem('userData');
 
+    // uses minutes instead of seconds
     const updateTimerInterval = (e) => {
-        // uses minutes instead of seconds, and I noticed this uses implicit casting... 
-        setConfig({...config, alertInterval: e.target.value });
-        setAlertInterval(e.target.value);
+        let newInterval = Number(e.target.value);
+        if (newInterval < 1) newInterval = 1; // prevents 0 & negative numbers
+        dispatch(setAlertInterval(newInterval));
     }
     
     const updateAutostartTimer = (e) => {
-        setAutostartTimer(e.target.checked);
-        setConfig({...config, autostartTimer: e.target.checked});
+        const newAutostartValue = e.target.checked;
+        dispatch(setAutostartTimer(newAutostartValue));
     }
 
     const updateEditBehavior = (e) => {
-        setEditBehavior(e.target.checked);
-        setConfig({...config, editBehavior: e.target.checked});
+        const newEditBehaviorValue = e.target.checked;
+        dispatch(setEditBehavior(newEditBehaviorValue));
     }
 
     return (
@@ -37,7 +38,7 @@ const SettingsMenu = ({ config, setConfig }) => {
           <label>Start Calls Instantly </label>
           <input
             type="checkbox"
-            checked={autostartTimer}
+            checked={config.autostartTimer}
             onChange={updateAutostartTimer}
           />
           <br />
@@ -48,7 +49,7 @@ const SettingsMenu = ({ config, setConfig }) => {
             type="number"
             min={1}
             max={60}
-            value={alertInterval}
+            value={config.alertInterval}
             onChange={updateTimerInterval}
           />
           <p style={{ display: "inline-block" }}> minute(s).</p>

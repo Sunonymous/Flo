@@ -1,101 +1,48 @@
+// styling
 import './App.css';
+// components
 import Logo from './Logo';
-import Timer from './CallTimer';
-import defaultConfig from './data/defaultConfig';
 import LeftPanel from './LeftPanel';
-import Behavior from './Behavior';
-import { useEffect, useState, useRef } from 'react';
-import CallResetter from './CallResetter';
-import SettingsMenu from './SettingsMenu';
-import StatsMenu from './StatsMenu';
+import SettingsMenu from './features/config/ConfigMenu';
+import StatsMenu from './features/stats/StatsMenu';
+import CallTracker from './CallTracker';
 import { Fireworks } from '@fireworks-js/react';
-import { initialCallStats } from './StatsMenu';
+// hooks
+import { useEffect, useState, useRef } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+// redux
+import { resetCall, startCall, selectCallState } from './features/callState/callStateSlice';
+// data
+import fireworksSettings from './data/fireworksSettings';
+import { initialCallStats } from './features/stats/StatsMenu';
+// icons
 import { SlCallIn } from 'react-icons/sl';
 import { MdSettings } from 'react-icons/md';
 import { ImStatsBars } from 'react-icons/im';
-import { useSelector, useDispatch } from 'react-redux';
-
-// some of these may end up moving into separate components. remove later if unused in this file
-import { startCall, completeCall, resetCall, selectCallState } from './features/callSlice';
-
-// for further customization, visit:
-// https://github.com/crashmax-dev/fireworks-js#fireworks-jsreact
-const fireworksSettings = {
-  opacity: 0.5,
-  traceSpeed: 3,
-  explosion: 10,
-  brightness: {min: 45, max: 60},
-  delay: {min: 65, max: 80},
-  particles: 100, 
-}
-
-const loadConfig = () => {
-  // if local storage has data saved, use that first
-  const userData = localStorage.getItem('userData');
-  if (userData) {
-    console.log('Loading user data.'); 
-    return JSON.parse(userData);
-  } else {
-    console.log('Loading default data.'); 
-    return defaultConfig;
-  }
-}
 
 function App() {
   // eslint-disable-next-line
-  const [resetter, setResetter] = useState(new CallResetter());
-  const [config, setConfig] = useState(loadConfig());
   const [callStats, setCallStats] = useState(initialCallStats);
 
   // moving state from react to redux
   // callState :: idle | talking | complete
-  const [callState, setCallState] = useState('idle');
-  // const callState = useSelector(selectCallState);
+  const callState = useSelector(selectCallState);
+  const  dispatch = useDispatch();
 
   const fireworksRef = useRef(null);
 
-  const saveBehaviors = (newBehaviors) => {
-    const newConfig = {...config, behaviorString: newBehaviors, editBehavior: false};
-    setConfig(newConfig);
-    localStorage.setItem('userData', JSON.stringify(newConfig));
-  }
-
-  useEffect(() => {
-    const completeCall = () => {
-      console.log("Call completed.");
-      if (config.autostartTimer) {
-        console.log('Autostarting next call.');
-        resetter.emit('newCall');
-      } else {
-        setCallState('idle');
-      }
-    };
-
-    const discardCall = () => {
-      console.log("Call discarded.");
-      setCallState("idle");
-    };
-
-    resetter.on("completeCall", completeCall);
-    resetter.on("discardCall", discardCall);
-   
-    return () => {
-      resetter.off("completeCall", completeCall);
-      resetter.off("discardCall", discardCall);
-    };
-  }, [config, resetter]);
-
   // reset button
   useEffect(() => {
-    const resetCall = (e) => {
-      if (e.key === "`") resetter.emit("newCall");
+    // Set keybinding for resetting call
+    const reset = (e) => {
+      if (e.key === "`") dispatch(resetCall());
     };
     document.addEventListener("keyup", resetCall);
 
     // Stop Fireworks upon Render
     fireworksRef.current.stop();
 
-    return () => document.removeEventListener("keyup", resetCall);
+    return () => document.removeEventListener("keyup", reset);
   });
 
   // container root class is for Fireworks
@@ -109,36 +56,27 @@ function App() {
         />
         <header className="App-header">
           <Logo text="flo" font="Kaushan Script" />
-          {callState === 'idle' && <button
-            className="resetButton noselect"
-            onClick={() => resetter.emit("newCall")}
-          >
-            <span style={{textAlign: 'center'}}>New Call<SlCallIn /></span>
-          </button>}
+          {/* Not on call */}
+          {callState === 'idle' && 
+            (<button
+              className="resetButton noselect"
+              onClick={() => dispatch(startCall())}
+            >
+              <span style={{ textAlign: 'center' }}>New Call<SlCallIn /></span>
+            </button>)}
+          {/* On call */}
           {callState !== "idle" && (
-            <Behavior
-              resetter={resetter}
-              config={config}
-              editActive={config.editBehavior}
-              fireworksRef={fireworksRef}
-              saveFunc={saveBehaviors}
-            />
+            <CallTracker fireworksRef={fireworksRef} />
           )}
-          <Timer
-            resetter={resetter}
-            autostartTimer={config.autostartTimer}
-            alertInterval={config.alertInterval}
-            callState={callState}
-            setCallState={setCallState}
-          />
         </header>
+        {/* Side panels */}
         <LeftPanel tabLabel={"\u2699"} shortcutKey="s" panels={[
           {tab: (<MdSettings />),
-           content: (<SettingsMenu config={config} setConfig={setConfig} />),
+           content: (<SettingsMenu />),
            shortcut: 's',
           },
           {tab: (<ImStatsBars />),
-           content: (<StatsMenu callStats={callStats} setCallStats={setCallStats} config={config} resetter={resetter} />),
+           content: (<StatsMenu />),
            shortcut: 'a',
           },
         ]}>

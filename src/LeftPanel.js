@@ -66,12 +66,14 @@ const LeftPanel = ({ children, tabLabel, shortcutKey, panels }) => {
       className={`backdrop ${isOpen ? "open" : ""}`}
       onClick={clickOnBackdrop}
     >
-      {/* {panels.map(Panel)} */}
       <div className={`panel ${isOpen ? "open" : ""}`}>
         <div className="allTabs">
           {panels.map(Tab)}
         </div>
-        <div className="content">{panels[contentVisible].content}</div>
+        <em className="tooSmall">~ Please widen browser to display panel content. ~</em>
+        <div className="content">
+          {panels[contentVisible].content}
+          </div>
       </div>
     </div>
   );

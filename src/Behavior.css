@@ -37,6 +37,9 @@
 .btn {
     width: 42px; 
     height: 42px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin: 4px; 
     margin-left: auto;
     margin-right: auto;
@@ -46,7 +49,14 @@
     border-radius: 50%;
     font-size: 1.5rem;
     font-weight: 500;
+    text-align: center;
     z-index: 1;
+}
+
+.btn.clear {
+    background: transparent;
+    border: none;
+    color: white;
 }
 
 .btn:hover {
@@ -111,8 +121,3 @@
     padding: 0rem 0.25rem 0rem 0.25rem;
 }
 
-.callActions {
-    width: 40%;
-    display: flex;
-    justify-content: space-around;
-}

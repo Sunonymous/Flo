@@ -1,0 +1,139 @@
+.timerToggle {
+    position: fixed;
+    bottom:   -1.5rem;
+    right:    -0.7rem;
+    color: rgb(255, 255, 255, 2.5%);
+    font-family: 'Noto Sans Symbols 2';
+    font-size: 8rem;
+    background: none;
+    border: none;
+    transform: rotateZ(-90deg) translateX(-5px) translateY(-25px);
+    transition: transform 0.3s ease-in-out;
+    z-index: 0;
+}
+
+.timerToggle.active {
+    transform: rotateZ(0deg);
+    color: rgb(255, 255, 255, 15%);
+}
+
+.btn {
+    width: 42px; 
+    height: 42px;
+    margin: 4px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px 4px;
+    background: white;
+    color: black;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    font-weight: 500;
+    z-index: 1;
+}
+
+.btn:hover {
+    background: #E20074;
+    color: white;
+    border: 2px solid white;
+    font-weight: 600;
+}
+
+.callActions {
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    justify-content: space-around;
+}
+
+.action {
+    margin: 4px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2px 4px;
+    display: flex;
+    flex-direction: vertical;
+    justify-content: center;
+    background: white;
+    color: black;
+    border: none;
+    border-radius: 50%;
+    font-size: 3rem;
+    z-index: 1;
+}
+
+.action:hover {
+    box-shadow:
+    2.8px 2.8px 2.2px rgba(0, 0, 0, 0.07),
+    6.7px 6.7px 5.3px rgba(0, 0, 0, 0.05),
+    12.5px 12.5px 10px rgba(0, 0, 0, 0.042),
+    22.3px 22.3px 17.9px rgba(0, 0, 0, 0.035),
+    41.8px 41.8px 33.4px rgba(0, 0, 0, 0.028),
+    100px 100px 80px rgba(0, 0, 0, 0.02)
+  ;
+}
+
+.success:hover {
+    background: #E20074;
+    color: white;
+    border: none;
+}
+
+.erase:hover {
+    background: rgb(0, 0, 0, 0.3);
+    border: none;
+}
+
+.icon {
+    width: 3rem; 
+    height: 3rem;
+    padding: 0rem 0.25rem 0rem 0.25rem;
+}
+
+.callTools {
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.timeDigits {
+    position: fixed;
+    bottom:   0.75rem;
+    right:    1rem;
+    font-weight: 800;
+    color: white;
+    font-size: 2rem;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+@keyframes bulgeAnimation {
+    0% {
+      font-size: 2rem;
+    }
+    50% {
+      font-size: 9rem;
+    }
+    100% {
+      font-size: 2rem;
+    }
+  }
+
+  @keyframes blinkAnimation {
+    0%, 100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0;
+    }
+  }
+  
+  .blinking {
+    animation: blinkAnimation 2s ease-in-out infinite;
+  } 
+  
+  .intervalAlert {
+    animation: bulgeAnimation 1s ease-in-out;
+    color: #E20074;
+  }
+  
