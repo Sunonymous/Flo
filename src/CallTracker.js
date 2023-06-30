@@ -65,7 +65,7 @@ export default function CallTracker({ fireworksRef }) {
     };
 
     return (
-        <div>
+        <div className='trackerWrapper'>
             {/* Tools */}
             <div className='callTools'>
                 <Behavior
