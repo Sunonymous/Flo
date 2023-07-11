@@ -1,5 +1,6 @@
 import "./Behavior.css";
 import React from "react";
+import { motion } from 'framer-motion';
 import { useSelector, useDispatch } from "react-redux";
 import { setBehaviorString, selectConfig, setEditBehavior } from "./features/config/configSlice";
 import { AiOutlineUndo, AiOutlineSave } from "react-icons/ai";
@@ -71,7 +72,11 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
   // display edit mode over behaviors if active
   return (
     <>
-      <div className="wrapper">
+      <motion.div className="wrapper"
+        initial={{opacity: 0, y: 75}}
+        animate={{opacity: 1, y: 0}}
+        transition={{ ease: 'easeOut', duration: 1 }}
+      >
         {/* Undo Button */}
         {completedIDs.length > 0 && !config.editBehavior && (
           <button className="btn clear noselect" onClick={undoLastAction}>
@@ -95,13 +100,13 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
             <div className="btn noselect" onClick={() => {
               dispatch(setBehaviorString(behaviorList));
               dispatch(setEditBehavior(false));
-              localStorage.setItem('userData', JSON.stringify(config));
+              setTimeout(() => localStorage.setItem('userData', JSON.stringify(config)), 2500);
             }}>
               <AiOutlineSave />
             </div>
           </div>
         )}
-      </div>
+      </motion.div>
     </>
   );
 }

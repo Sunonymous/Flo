@@ -1,67 +1,67 @@
 import './CallTracker.css';
 import React from 'react';
+import { motion } from 'framer-motion';
 import Behavior from './Behavior';
+import Timer from './Timer';
 import { BsCheck2, BsStopwatch, BsTrash } from 'react-icons/bs';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectConfig } from './features/config/configSlice';
 import { resetCall } from './features/callState/callStateSlice';
 import { completeCall } from './features/stats/statsSlice';
-import timeFormatter from './lib/formatTime';
-import builtClass from './lib/builtClass';
+import { calculateTimeDifference } from './Timer';
 
-const MS_IN_SECOND = 1000;
-const SECONDS_IN_MINUTE = 60;
 const splitOnLines = (s) => s.split('\n');
 
-// tracker component consolidates behavior and timer into one
+// sub-component for complete/discard buttons
+const CallActions = ({ saveFunc }) => {
+    const dispatch = useDispatch();
+
+    const discardCall = () => {
+        dispatch(resetCall());
+    };
+   
+    const actionButtonTransition = { duration: 0.65 };
+
+    return (
+      <motion.div
+        className="callActions"
+        initial={{ opacity: 0, scale: 1.25 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 1.25 }}
+      >
+        <motion.div
+          layout
+          transition={actionButtonTransition}
+          className="action success noselect icon"
+          onClick={saveFunc}
+        >
+          <BsCheck2 className="icon" />
+        </motion.div>
+        <motion.div
+          layout
+          transition={actionButtonTransition}
+          className="btn erase noselect icon"
+          onClick={discardCall}
+        >
+          <BsTrash className="icon" />
+        </motion.div>
+      </motion.div>
+    );
+};
 
 export default function CallTracker({ fireworksRef }) {
-    const   config = useSelector(selectConfig);
-    const [secondsTracked, setSecondsTracked] = React.useState(0);
-    const     [completedIDs, setCompletedIDs] = React.useState([]);
-    const                         [startTime] = React.useState(Date.now());
+    const dispatch = useDispatch();
+    const config = useSelector(selectConfig);
+    const [completedIDs, setCompletedIDs] = React.useState([]);
+    const                     [startTime] = React.useState(Date.now());
 
-    // the lifetime of this component is tracked here
-    React.useEffect(() => {
-        let interval = setInterval(() => {
-            const now = Date.now();
-            const elapsedMS = now - startTime;
-            setSecondsTracked(Math.round(elapsedMS / MS_IN_SECOND));
-        }, 1000);
-        return () => clearInterval(interval);
-    }, [startTime]);
-
-    // if timer reaches alert interval, add a special animation
-    const atAlertInterval = (secondsTracked % (config.alertInterval * SECONDS_IN_MINUTE) === 0);
-    const timerTextClass = builtClass(['timeDigits',
-        'noselect',
-        [atAlertInterval, 'intervalAlert']]);
-
-    // sub-component for complete/discard buttons
-    const CallActions = () => {
-        const dispatch = useDispatch();
-        const saveCall = () => {
-            const behaviors = splitOnLines(config.behaviorString);
-            const completedBehaviors = completedIDs.map((idx) => behaviors[idx]);
-            const statsObj = {behaviors: completedBehaviors, time: secondsTracked}
-            dispatch(completeCall(statsObj));
-            dispatch(resetCall());
-        };
-
-        const discardCall = () => {
-            dispatch(resetCall());
-        };
-
-        return (
-            <div className="callActions">
-                <div className="action success noselect icon" onClick={saveCall}>
-                    <BsCheck2 className="icon" />
-                </div>
-                <div className="btn erase noselect icon" onClick={discardCall}>
-                    <BsTrash className="icon" />
-                </div>
-            </div>
-        );
+    const saveCall = () => {
+        const behaviors = splitOnLines(config.behaviorString);
+        const completedBehaviors = completedIDs.map((idx) => behaviors[idx]);
+        const secondsTracked = calculateTimeDifference(startTime);
+        const statsObj = {behaviors: completedBehaviors, time: secondsTracked};
+        dispatch(completeCall(statsObj));
+        dispatch(resetCall());
     };
 
     return (
@@ -81,10 +81,10 @@ export default function CallTracker({ fireworksRef }) {
                     <div className={"timerToggle noselect active"}>
                         <BsStopwatch />
                     </div>
-                    <p className={timerTextClass}>{timeFormatter.clock(secondsTracked)}</p>
+                    <Timer startTime={startTime} />
                 </div>)}
             {/* Call Actions */}
-            {!config.editBehavior && <CallActions />}
+            {!config.editBehavior && <CallActions saveFunc={saveCall} />}
         </div>
     );
 };
