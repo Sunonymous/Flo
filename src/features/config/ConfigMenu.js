@@ -71,6 +71,7 @@ const SettingsMenu = ({ setConfig }) => {
           onClick={() => {
             localStorage.removeItem('userData');
             alert('If there was any data saved, it\'s gone now!');
+            window.location.reload(); 
           }}>
             <MdDeleteForever size={32} />
           </div>
