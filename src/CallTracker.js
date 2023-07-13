@@ -10,8 +10,6 @@ import { resetCall } from './features/callState/callStateSlice';
 import { completeCall } from './features/stats/statsSlice';
 import { calculateTimeDifference } from './Timer';
 
-const splitOnLines = (s) => s.split('\n');
-
 // sub-component for complete/discard buttons
 const CallActions = ({ saveFunc }) => {
     const dispatch = useDispatch();
@@ -52,14 +50,15 @@ const CallActions = ({ saveFunc }) => {
 export default function CallTracker({ fireworksRef }) {
     const dispatch = useDispatch();
     const config = useSelector(selectConfig);
-    const [completedIDs, setCompletedIDs] = React.useState([]);
+    const [completedBehaviors, setCompletedBehaviors] = React.useState([]);
     const                     [startTime] = React.useState(Date.now());
 
     const saveCall = () => {
-        const behaviors = splitOnLines(config.behaviorString);
-        const completedBehaviors = completedIDs.map((idx) => behaviors[idx]);
         const secondsTracked = calculateTimeDifference(startTime);
-        const statsObj = {behaviors: completedBehaviors, time: secondsTracked};
+        const statsObj = {
+          behaviors: completedBehaviors,
+               time: secondsTracked,
+        };
         dispatch(completeCall(statsObj));
         dispatch(resetCall());
     };
@@ -70,8 +69,8 @@ export default function CallTracker({ fireworksRef }) {
             <div className='callTools'>
                 <Behavior
                     fireworksRef={fireworksRef}
-                    completedIDs={completedIDs}
-                    setCompletedIDs={setCompletedIDs}
+                    completedBehaviors={completedBehaviors}
+                    setCompletedBehaviors={setCompletedBehaviors}
                 />
             </div>
             {/* Timer bits */}

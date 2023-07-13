@@ -7,7 +7,7 @@ import { AiOutlineUndo, AiOutlineSave } from "react-icons/ai";
 
 const splitOnLines = (s) => s.split('\n');
 
-export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }) {
+export default function Behavior({ fireworksRef, completedBehaviors, setCompletedBehaviors }) {
   const config = useSelector(selectConfig);
   const dispatch = useDispatch();
   const [behaviors, setBehaviors] = React.useState(splitOnLines(config.behaviorString));
@@ -16,7 +16,7 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
   const [behaviorList, setBehaviorList] = React.useState(config.behaviorString);
  
   const undoLastAction = () => {
-    setCompletedIDs(completedIDs.slice(0, completedIDs.length - 1));
+    setCompletedBehaviors(completedBehaviors.slice(0, completedBehaviors.length - 1));
   };
 
   // undo keybinding
@@ -30,16 +30,16 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
 
     // linter complaints that undoLastAction needs to be in dependency array
     // eslint-disable-next-line
-  }, [completedIDs, setCompletedIDs]);
+  }, [completedBehaviors, setCompletedBehaviors]);
 
   React.useEffect(() => {
-    if (completedIDs.length === behaviors.length) fireworksRef.current.launch(3);
-  }, [behaviors, completedIDs, fireworksRef, setCompletedIDs]);
+    if (completedBehaviors.length === behaviors.length) fireworksRef.current.launch(3);
+  }, [behaviors, completedBehaviors, fireworksRef, setCompletedBehaviors]);
 
   // returns formatting for individual actions
   const callAction = (behavior, id) => {
     const finishAction = (e) => {
-      setCompletedIDs(completedIDs.concat(id));
+      setCompletedBehaviors(completedBehaviors.concat(behavior));
     }
 
     return (
@@ -53,11 +53,11 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
   React.useEffect(() => {
     const individualActions = splitOnLines(behaviorList);
     setBehaviors(individualActions);
-    setCompletedIDs([]);
-  }, [behaviorList, setCompletedIDs]);
+    setCompletedBehaviors([]);
+  }, [behaviorList, setCompletedBehaviors]);
 
   // if all behaviors are completed, display such
-  if (completedIDs.length === behaviors.length) {
+  if (completedBehaviors.length === behaviors.length) {
     return (
       <>
         <p className="infoMessage noselect">
@@ -72,13 +72,14 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
   // display edit mode over behaviors if active
   return (
     <>
-      <motion.div className="wrapper"
-        initial={{opacity: 0, y: 75}}
-        animate={{opacity: 1, y: 0}}
-        transition={{ ease: 'easeOut', duration: 1 }}
+      <motion.div
+        className="wrapper"
+        initial={{ opacity: 0, y: 75 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ ease: "easeOut", duration: 1 }}
       >
         {/* Undo Button */}
-        {completedIDs.length > 0 && !config.editBehavior && (
+        {completedBehaviors.length > 0 && !config.editBehavior && (
           <button className="btn clear noselect" onClick={undoLastAction}>
             <AiOutlineUndo />
           </button>
@@ -86,7 +87,7 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
         {/* Behaviors */}
         {!config.editBehavior &&
           behaviors.map((b, id) =>
-            !completedIDs.includes(id) ? callAction(b, id) : null
+            !completedBehaviors.includes(b) ? callAction(b, id) : null
           )}
         {/* Edit Window */}
         {config.editBehavior && (
@@ -97,11 +98,17 @@ export default function Behavior({ fireworksRef, completedIDs, setCompletedIDs }
               rows={behaviors.length}
               onChange={(e) => setBehaviorList(e.target.value)}
             ></textarea>
-            <div className="btn noselect" onClick={() => {
-              dispatch(setBehaviorString(behaviorList));
-              dispatch(setEditBehavior(false));
-              setTimeout(() => localStorage.setItem('userData', JSON.stringify(config)), 2500);
-            }}>
+            <div
+              className="btn noselect"
+              onClick={() => {
+                dispatch(setBehaviorString(behaviorList));
+                dispatch(setEditBehavior(false));
+                localStorage.setItem(
+                  "userData",
+                  JSON.stringify({ ...config, editBehavior: false })
+                );
+              }}
+            >
               <AiOutlineSave />
             </div>
           </div>
