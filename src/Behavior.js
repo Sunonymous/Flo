@@ -76,7 +76,7 @@ export default function Behavior({ fireworksRef, completedBehaviors, setComplete
         className="wrapper"
         initial={{ opacity: 0, y: 75 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ ease: "easeOut", duration: 1 }}
+        transition={{ ease: "easeOut", duration: 1.5 }}
       >
         {/* Undo Button */}
         {completedBehaviors.length > 0 && !config.editBehavior && (
