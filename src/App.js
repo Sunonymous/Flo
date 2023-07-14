@@ -48,7 +48,7 @@ function App() {
   // container root class is for Fireworks
   return (
     <div className="App">
-      <div className="fireworks">
+      <div>
         <Fireworks
           className="fireworks"
           ref={fireworksRef}
