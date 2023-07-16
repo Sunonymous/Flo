@@ -4,12 +4,16 @@ import { MdDeleteForever } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectConfig, setAlertInterval,
          setAutostartTimer, setEditBehavior } from './configSlice';
+import { ToastContext } from '../../ToastProvider';
+import { selectHasLocalStorage } from '../hasLocalStorage/hasLocalStorageSlice';
 
 const SettingsMenu = ({ setConfig }) => {
-    const dispatch = useDispatch();
+    const hasLocalStorage = useSelector(selectHasLocalStorage);
     const config   = useSelector(selectConfig);
+    const dispatch = useDispatch();
+    const { addToast } = React.useContext(ToastContext);
    
-    const hasUserData = !!localStorage.getItem('userData');
+    const hasUserData = hasLocalStorage && !!localStorage.getItem('userData');
 
     // uses minutes instead of seconds
     const updateTimerInterval = (e) => {
@@ -69,9 +73,14 @@ const SettingsMenu = ({ setConfig }) => {
           <p>Delete user data?</p>
           <div className="settingButton serious"
           onClick={() => {
-            localStorage.removeItem('userData');
-            alert('If there was any data saved, it\'s gone now!');
-            window.location.reload(); 
+            try {
+              localStorage.removeItem("userData");
+              addToast("notice", "User data has been deleted. Reloading page.");
+              setTimeout(() => window.location.reload(), 2000); 
+            } catch(error) {
+              console.error('Error deleting user data: ', error);
+              addToast("error", "Unable to delete user data. Error logged to the console.");
+            }
           }}>
             <MdDeleteForever size={32} />
           </div>

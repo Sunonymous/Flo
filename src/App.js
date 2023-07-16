@@ -8,13 +8,13 @@ import StatsMenu from './features/stats/StatsMenu';
 import CallTracker from './CallTracker';
 import { Fireworks } from '@fireworks-js/react';
 // hooks
-import { useEffect, useState, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // redux
 import { resetCall, startCall, selectCallState } from './features/callState/callStateSlice';
+import { selectHasLocalStorage } from './features/hasLocalStorage/hasLocalStorageSlice';
 // data
 import fireworksSettings from './data/fireworksSettings';
-import { initialCallStats } from './features/stats/StatsMenu';
 // icons
 import { SlCallIn } from 'react-icons/sl';
 import { MdSettings } from 'react-icons/md';
@@ -23,14 +23,18 @@ import { ToastContext } from './ToastProvider';
 import ToastShelf from './ToastShelf';
 
 function App() {
-  // eslint-disable-next-line
-  const [callStats, setCallStats] = useState(initialCallStats);
+  const hasLocalStorage = useSelector(selectHasLocalStorage);
+  const callState = useSelector(selectCallState);
+  const  dispatch = useDispatch();
 
   // Toast Context
   const { addToast } = useContext(ToastContext);
-
-  const callState = useSelector(selectCallState);
-  const  dispatch = useDispatch();
+  useEffect(() => {
+    if (!hasLocalStorage) {
+      addToast('warning', 'Your local storage is disabled. Flo will not be able to save data!');
+    }
+  // eslint-disable-next-line
+  }, []);
 
   const fireworksRef = useRef(null);
 
@@ -63,10 +67,7 @@ function App() {
           {callState === 'idle' && 
             (<button
               className="resetButton noselect"
-              onClick={() => {
-                addToast('notice', 'Call Started') // used for testing component
-                dispatch(startCall())
-              }}
+              onClick={() => dispatch(startCall())}
             >
               <span style={{ textAlign: 'center' }}>New Call<SlCallIn /></span>
             </button>)}

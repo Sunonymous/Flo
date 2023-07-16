@@ -69,6 +69,7 @@ const StatsMenu = () => {
 
       <div className="section">
         <h3>Behaviors</h3>
+        {config.behaviorString.trim().length === 0 && <p>No behaviors are listed.</p>}
         <div>
           {Object.keys(stats.behaviors)
             .filter(includedInActiveBehaviors)
