@@ -8,7 +8,7 @@ import StatsMenu from './features/stats/StatsMenu';
 import CallTracker from './CallTracker';
 import { Fireworks } from '@fireworks-js/react';
 // hooks
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useContext } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 // redux
 import { resetCall, startCall, selectCallState } from './features/callState/callStateSlice';
@@ -19,13 +19,16 @@ import { initialCallStats } from './features/stats/StatsMenu';
 import { SlCallIn } from 'react-icons/sl';
 import { MdSettings } from 'react-icons/md';
 import { ImStatsBars } from 'react-icons/im';
+import { ToastContext } from './ToastProvider';
+import ToastShelf from './ToastShelf';
 
 function App() {
   // eslint-disable-next-line
   const [callStats, setCallStats] = useState(initialCallStats);
 
-  // moving state from react to redux
-  // callState :: idle | talking | complete
+  // Toast Context
+  const { addToast } = useContext(ToastContext);
+
   const callState = useSelector(selectCallState);
   const  dispatch = useDispatch();
 
@@ -60,7 +63,10 @@ function App() {
           {callState === 'idle' && 
             (<button
               className="resetButton noselect"
-              onClick={() => dispatch(startCall())}
+              onClick={() => {
+                addToast('notice', 'Call Started') // used for testing component
+                dispatch(startCall())
+              }}
             >
               <span style={{ textAlign: 'center' }}>New Call<SlCallIn /></span>
             </button>)}
@@ -71,17 +77,18 @@ function App() {
         </header>
         {/* Side panels */}
         <LeftPanel tabLabel={"\u2699"} shortcutKey="s" panels={[
-          {tab: (<MdSettings />),
-           content: (<SettingsMenu />),
+          {tab:      (<MdSettings />),
+           content:  (<SettingsMenu />),
            shortcut: 's',
           },
-          {tab: (<ImStatsBars />),
-           content: (<StatsMenu />),
+          {tab:      (<ImStatsBars />),
+           content:  (<StatsMenu />),
            shortcut: 'a',
           },
         ]}>
         </LeftPanel>
       </div>
+      <ToastShelf />
     </div>
   );
 }

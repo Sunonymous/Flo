@@ -30,7 +30,7 @@ const CallActions = ({ saveFunc }) => {
         <motion.div
           layout
           transition={actionButtonTransition}
-          className="action success noselect icon"
+          className="action save noselect icon"
           onClick={saveFunc}
         >
           <BsCheck2 className="icon" />

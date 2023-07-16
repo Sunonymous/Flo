@@ -2,6 +2,18 @@
 @import url('https://fonts.googleapis.com/css?family=Kaushan+Script');
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+Symbols+2');
 
+/* Root Colors */
+:root {
+  --color-notice: hsl(235deg 100% 50%);
+  --color-notice-bg: hsl(235deg 0% 100%);
+  --color-warning: hsl(35deg 100% 46%);
+  --color-warning-bg: hsl(40deg 100% 94%);
+  --color-success: hsl(120deg 80% 35%);
+  --color-success-bg: hsl(120deg 90% 96%);
+  --color-error: hsl(345deg 100% 50%);
+  --color-error-bg: hsl(350deg 90% 96%);
+}
+
 .App {
   text-align: center;
 }

@@ -8,7 +8,7 @@ import { AiOutlineUndo, AiOutlineSave } from "react-icons/ai";
 const splitOnLines = (s) => s.split('\n');
 
 export default function Behavior({ fireworksRef, completedBehaviors, setCompletedBehaviors }) {
-  const config = useSelector(selectConfig);
+  const   config = useSelector(selectConfig);
   const dispatch = useDispatch();
   const [behaviors, setBehaviors] = React.useState(splitOnLines(config.behaviorString));
 
