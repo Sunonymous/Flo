@@ -14,7 +14,6 @@ export default function Behavior({ fireworksRef, completedBehaviors, setComplete
   const hasLocalStorage = useSelector(selectHasLocalStorage);
   const [behaviors, setBehaviors] = React.useState(splitOnLines(config.behaviorString));
 
-  console.log('behaviors', behaviors);
   // could preface this variable name with local
   const [behaviorList, setBehaviorList] = React.useState(config.behaviorString);
  
