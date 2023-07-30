@@ -11,7 +11,7 @@ import React, { useState } from 'react';
 // 
 
 // passed children for props and a string to show on tab
-const LeftPanel = ({ children, tabLabel, shortcutKey, panels }) => {
+const LeftPanel = ({ panels }) => {
   const                 [isOpen, setIsOpen] = useState(false);
   const [contentVisible, setContentVisible] = useState(0);
 
@@ -44,7 +44,7 @@ const LeftPanel = ({ children, tabLabel, shortcutKey, panels }) => {
     document.addEventListener('keyup', toggleOnKey);
 
     return () => document.removeEventListener('keyup', toggleOnKey);
-  }, [isOpen, shortcutKey, panels]);
+  }, [isOpen, panels]);
 
   const Tab = (panel, idx) => {
     return (

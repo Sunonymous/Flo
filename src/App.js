@@ -64,30 +64,28 @@ function App() {
         <header className="App-header">
           <Logo text="flo" font="Kaushan Script" />
           {/* Not on call */}
-          {callState === 'idle' && 
-            (<button
+          {callState === "idle" && (
+            <button
               className="resetButton noselect"
               onClick={() => dispatch(startCall())}
             >
-              <span style={{ textAlign: 'center' }}>New Call<SlCallIn /></span>
-            </button>)}
-          {/* On call */}
-          {callState !== "idle" && (
-            <CallTracker fireworksRef={fireworksRef} />
+              <span style={{ textAlign: "center" }}>
+                New Call
+                <SlCallIn />
+              </span>
+            </button>
           )}
+          {/* On call */}
+          {callState !== "idle" && <CallTracker fireworksRef={fireworksRef} />}
         </header>
         {/* Side panels */}
-        <LeftPanel tabLabel={"\u2699"} shortcutKey="s" panels={[
-          {tab:      (<MdSettings />),
-           content:  (<SettingsMenu />),
-           shortcut: 's',
-          },
-          {tab:      (<ImStatsBars />),
-           content:  (<StatsMenu />),
-           shortcut: 'a',
-          },
-        ]}>
-        </LeftPanel>
+        <LeftPanel
+          shortcutKey="s"
+          panels={[
+            { tab: <MdSettings />,  content: <SettingsMenu />, shortcut: "s" },
+            { tab: <ImStatsBars />, content: <StatsMenu />,    shortcut: "a" },
+          ]}
+        />
       </div>
       <ToastShelf />
     </div>
