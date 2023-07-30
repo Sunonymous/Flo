@@ -1,6 +1,8 @@
 import './LeftPanel.css';
 import React, { useState } from 'react';
 
+const INPUT_NODE_NAMES = ['TEXTAREA', 'INPUT'];
+
 // must be given an array containing special panel objects
 // they look like {
 // {
@@ -32,8 +34,8 @@ const LeftPanel = ({ panels }) => {
 
       panels.forEach((panel, idx) => {
         if (
-          e.key === panel.shortcut &&
-          document.activeElement.nodeName !== "TEXTAREA"
+          !INPUT_NODE_NAMES.includes(document.activeElement.nodeName) &&
+          e.key === panel.shortcut
         ) {
           setContentVisible(idx);
           togglePanelKeyboard(); 
