@@ -7,7 +7,7 @@ import { selectConfig, setAlertInterval,
 import { ToastContext } from '../../ToastProvider';
 import { selectHasLocalStorage } from '../hasLocalStorage/hasLocalStorageSlice';
 
-const SettingsMenu = ({ setConfig }) => {
+const SettingsMenu = () => {
     const hasLocalStorage = useSelector(selectHasLocalStorage);
     const config   = useSelector(selectConfig);
     const dispatch = useDispatch();
@@ -39,7 +39,7 @@ const SettingsMenu = ({ setConfig }) => {
 
         <div className="section">
           <h3>Timer</h3>
-          <label>Start Calls Instantly </label>
+          <label>No Idle Time </label>
           <input
             type="checkbox"
             checked={config.autostartTimer}
