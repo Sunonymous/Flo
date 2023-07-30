@@ -12,6 +12,8 @@ import VisuallyHidden from "./VisuallyHidden.js";
 
 import "./Toast.css";
 
+// there's a strange bug where toasts interrupt fireworks!
+
 const ICONS_BY_VARIANT = {
   notice:  LuAlertCircle,
   warning: LuAlertTriangle,
