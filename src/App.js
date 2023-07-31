@@ -5,6 +5,7 @@ import Logo from './Logo';
 import LeftPanel from './LeftPanel';
 import SettingsMenu from './features/config/ConfigMenu';
 import StatsMenu from './features/stats/StatsMenu';
+import ReminderMenu from './features/reminders/ReminderMenu';
 import CallTracker from './CallTracker';
 import { Fireworks } from '@fireworks-js/react';
 // hooks
@@ -17,7 +18,7 @@ import { selectHasLocalStorage } from './features/hasLocalStorage/hasLocalStorag
 import fireworksSettings from './data/fireworksSettings';
 // icons
 import { SlCallIn } from 'react-icons/sl';
-import { MdSettings } from 'react-icons/md';
+import { MdSettings, MdOutlineAlarmOn } from 'react-icons/md';
 import { ImStatsBars } from 'react-icons/im';
 import { ToastContext } from './ToastProvider';
 import ToastShelf from './ToastShelf';
@@ -82,8 +83,9 @@ function App() {
         <LeftPanel
           shortcutKey="s"
           panels={[
-            { tab: <MdSettings />,  content: <SettingsMenu />, shortcut: "s" },
-            { tab: <ImStatsBars />, content: <StatsMenu />,    shortcut: "a" },
+            { tab: <MdOutlineAlarmOn />, content: <ReminderMenu />, shortcut: "r" },
+            { tab: <MdSettings />,       content: <SettingsMenu />, shortcut: "s" },
+            { tab: <ImStatsBars />,      content: <StatsMenu />,    shortcut: "a" },
           ]}
         />
       </div>

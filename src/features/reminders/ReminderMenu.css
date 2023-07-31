@@ -1,0 +1,78 @@
+.createReminderForm h4 {
+    margin: 0.25rem;
+    margin-bottom: 1rem; 
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+.createReminderForm {
+    display: flex;
+    flex-direction: column;
+    border: 1px dotted gray;
+    border-radius: 8px;
+    margin: 1rem;
+    padding: 0.5rem 1rem; 
+}
+
+.createReminderFormButtons {
+    margin: 0.5rem;
+    padding: 0.5rem;
+}
+
+.createReminderFormButtons button {
+}
+
+input[type="time"] {
+    padding: 2px;
+}
+
+input[type="time"]:invalid {
+    border: 2px solid red;
+    border-radius: 8px;
+}
+
+.reminderEditor {
+    border: 1px solid gray;
+    border-radius: 8px;
+    margin: 1rem;
+    padding: 0.5rem 1rem; 
+}
+
+.reminderEditor h4 {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+} 
+
+.reminderEditor ul {
+    list-style-type: none;
+    padding: 0.5rem 1rem;
+}
+
+.singleReminder {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.reminderAt {
+    flex: 0.25;
+    font-weight: 600;
+}
+
+.reminderMsg {
+    flex: 1.75;
+    margin: 0.25rem;
+}
+
+.removeReminderBtn {
+    border: 1px solid black;
+    border-radius: 8px; 
+    font-weight: 700;
+    flex: 0.25;
+}
+
+.removeReminderBtn:hover {
+    color: white;
+    background: black; 
+    border: 1px solid white;
+}

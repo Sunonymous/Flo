@@ -1,23 +1,26 @@
 import React from "react";
 import useGlobalKey from "./hooks/useGlobalKey";
+import { useDispatch, useSelector } from "react-redux";
+import { selectToasts, popToast, consumeToast, consumeAllToasts } from "./features/toasts/toastsSlice";
 
 export const ToastContext = React.createContext('');
 
 function ToastProvider({ children }) {
-  const [toastRoster, setToastRoster] = React.useState([]);
+  const    dispatch = useDispatch();
+  const toastRoster = useSelector(selectToasts);
 
-  const consumeAllToasts = () => setToastRoster([]);
+  const removeAllToasts = () => dispatch(consumeAllToasts());
 
-  useGlobalKey('Escape', consumeAllToasts);
+  useGlobalKey('Escape', removeAllToasts);
 
   function addToast(type, message) {
     const id = Math.random();
     const newToast = {id, type, message};
-    setToastRoster([...toastRoster, newToast]);
+    dispatch(popToast(newToast));
   } 
 
   function removeToast(idToRemove) {
-    setToastRoster(toastRoster.filter((t) => t.id !== idToRemove));
+    dispatch(consumeToast(idToRemove));
   }
   
   return (
