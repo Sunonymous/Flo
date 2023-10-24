@@ -26,9 +26,6 @@ export const configSlice = createSlice({
         setAlertInterval:  (state, action) => {
             state.alertInterval  = action.payload;
         },
-        setAutostartTimer: (state, action) => {
-            state.autostartTimer = action.payload;
-        },
         setEditBehavior:   (state, action) => {
             state.editBehavior   = action.payload;
         },
@@ -37,7 +34,7 @@ export const configSlice = createSlice({
         },
     }});
 
-export const { setAlertInterval, setAutostartTimer, setEditBehavior, setBehaviorString } = configSlice.actions;
+export const { setAlertInterval, startTimer, setEditBehavior, setBehaviorString } = configSlice.actions;
 
 export const selectConfig = (state) => state.config;
 

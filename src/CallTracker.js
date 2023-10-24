@@ -17,7 +17,7 @@ const CallActions = ({ saveFunc }) => {
     const discardCall = () => {
         dispatch(resetCall());
     };
-   
+
     const actionButtonTransition = { duration: 0.65 };
 
     return (

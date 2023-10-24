@@ -2,8 +2,7 @@ import React from 'react';
 import './ConfigMenu.css';
 import { MdDeleteForever } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectConfig, setAlertInterval,
-         setAutostartTimer, setEditBehavior } from './configSlice';
+import { selectConfig, setAlertInterval, setEditBehavior } from './configSlice';
 import { ToastContext } from '../../ToastProvider';
 import { selectHasLocalStorage } from '../hasLocalStorage/hasLocalStorageSlice';
 
@@ -12,7 +11,7 @@ const SettingsMenu = () => {
     const config   = useSelector(selectConfig);
     const dispatch = useDispatch();
     const { addToast } = React.useContext(ToastContext);
-   
+
     const hasUserData = hasLocalStorage && !!localStorage.getItem('userData');
 
     // uses minutes instead of seconds
@@ -20,11 +19,6 @@ const SettingsMenu = () => {
         let newInterval = Number(e.target.value);
         if (newInterval < 1) newInterval = 1; // prevents 0 & negative numbers
         dispatch(setAlertInterval(newInterval));
-    }
-    
-    const updateAutostartTimer = (e) => {
-        const newAutostartValue = e.target.checked;
-        dispatch(setAutostartTimer(newAutostartValue));
     }
 
     const updateEditBehavior = (e) => {
@@ -39,14 +33,6 @@ const SettingsMenu = () => {
 
         <div className="section">
           <h3>Timer</h3>
-          <label>No Idle Time </label>
-          <input
-            type="checkbox"
-            checked={config.autostartTimer}
-            onChange={updateAutostartTimer}
-          />
-          <br />
-
           <label htmlFor="timerAlertInterval">Alert every </label>
           <input
             id="timerAlertInterval"
@@ -76,7 +62,7 @@ const SettingsMenu = () => {
             try {
               localStorage.removeItem("userData");
               addToast("notice", "User data has been deleted. Reloading page.");
-              setTimeout(() => window.location.reload(), 2000); 
+              setTimeout(() => window.location.reload(), 2000);
             } catch(error) {
               console.error('Error deleting user data: ', error);
               addToast("error", "Unable to delete user data. Error logged to the console.");
